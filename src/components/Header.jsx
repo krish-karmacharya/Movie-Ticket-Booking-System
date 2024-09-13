@@ -3,9 +3,25 @@ import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [isCitySelectorOpen, setIsCitySelectorOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleCitySelector = () => {
+    setIsCitySelectorOpen(!isCitySelectorOpen);
+  };
+
+  const cities = [
+    "Kathmandu", "Birtamode", "Nepalgunj", "Narayangarh", "Itahari",
+    "Birgunj", "Biratnagar", "Butwal", "Damauli", "Pokhara",
+  ];
+
+  const handleCityClick = (city) => {
+    setSelectedCity(city);
+    setIsCitySelectorOpen(false);
   };
 
   return (
@@ -20,9 +36,9 @@ const Header = () => {
         </a>
         <ul className="flex space-x-6">
           <li>
-            <a href="#" className="hover:text-gray-300 text-lg">
-              Home
-            </a>
+            <button onClick={toggleCitySelector} className="hover:text-gray-300 text-lg">
+              {selectedCity || "Select City"}
+            </button>
           </li>
           <li>
             <a href="all_movies.html" className="hover:text-gray-300 text-lg">
@@ -40,11 +56,8 @@ const Header = () => {
             </a>
           </li>
           <li>
-            <div className="flex items-center justify-center">
-              <div className="border w-fit rounded-xl shadow-sm">
-                <button className="px-4 py-2 rounded-l-xl text-white m-0 bg-red-500 hover:bg-red-600 transition">Login</button>
-                <button className="px-4 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition text-black hover:text-gray-700">Register</button>
-              </div>
+            <div className="flex items-center justify-center space-x-2">
+              <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign Up</button>
             </div>
           </li>
         </ul>
@@ -77,13 +90,10 @@ const Header = () => {
               </div>
               <nav>
                 <ul className="py-4">
-                  <li>
-                    <a
-                      href="#"
-                      className="block px-6 py-2 text-gray-800 hover:bg-gray-100 text-lg"
-                    >
-                      Home
-                    </a>
+                  <li className="px-6 py-2">
+                    <button onClick={toggleCitySelector} className="text-gray-800 hover:bg-gray-100 text-lg">
+                      {selectedCity || "Select City"}
+                    </button>
                   </li>
                   <li>
                     <a
@@ -110,11 +120,8 @@ const Header = () => {
                     </a>
                   </li>
                   <li className="px-6 py-2">
-                    <div className="flex items-center justify-center">
-                      <div className="border w-full rounded-xl shadow-sm">
-                        <button className="px-4 py-2 rounded-l-xl text-white m-0 bg-red-500 hover:bg-red-600 transition">Login</button>
-                        <button className="px-4 py-2 rounded-r-xl bg-neutral-50 hover:bg-neutral-100 transition text-black hover:text-gray-700">Register</button>
-                      </div>
+                    <div className="flex flex-col space-y-2">
+                      <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign Up</button>
                     </div>
                   </li>
                 </ul>
@@ -123,6 +130,27 @@ const Header = () => {
           </div>
         )}
       </div>
+
+      {/* City Selector */}
+      {isCitySelectorOpen && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="bg-gray-800 rounded-md shadow-md p-4 w-80">
+            <h2 className="text-lg font-bold text-white mb-2">Cities</h2>
+            <div className="grid grid-cols-2 gap-2">
+              {cities.map((city) => (
+                <button
+                  key={city}
+                  className={`bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md ${selectedCity === city ? 'bg-blue-500' : ''
+                    }`}
+                  onClick={() => handleCityClick(city)}
+                >
+                  {city}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };
