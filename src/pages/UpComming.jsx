@@ -1,75 +1,7 @@
 import React from "react";
-
-interface Movie {
-  title: string;
-  imageUrl: string;
-  releaseDate: string;
-}
+import upcomingMovies from "../DataFiles/Upcomming.json";
 
 function UpComming() {
-  const upcomingMovies: Movie[] = [
-    {
-      title: "Dune: Part Two",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BODI0YjNhNjUtYjM0My00MTUwLWFlYTMtMWI2NGUzYjNjNGQzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
-      releaseDate: "15 Mar 2024",
-    },
-    {
-      title: "Shazam! Fury of the Gods",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BNzJlM2NmZTItOGQyYS00MmE2LTkwZGUtNDFkNmJmZjRjZjcxXkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_SX300.jpg",
-      releaseDate: "17 Mar 2023",
-    },
-    {
-      title: "Minions: The Rise of Gru",
-      imageUrl:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREaMBS1xIj7bOT2ZOLQz0tmLT8xU0nCKT73g&s",
-      releaseDate: "1 Jul 2022",
-    },
-    {
-      title: "Guardians of the Galaxy Vol. 3",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BMDgxOTdjMzYtZGQxMS00ZTAzLWI4Y2UtMTQzN2VlYjYyZWRiXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
-      releaseDate: "5 May 2023",
-    },
-    {
-      title: "The Flash",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BZWE2ZWE5MDQtMTJlZi00MTVjLTkxOTgtNmNiYjg2NDIxN2NhXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-      releaseDate: "16 Jun 2023",
-    },
-    {
-      title: "Detective Conan: Black Iron Submarine",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BNzk2ZThjMzYtZjkzNC00MTlhLTgwZjctZDIzZTZmOGMxNmM5XkEyXkFqcGdeQXVyMTA3MDk2NDg2._V1_SX300.jpg",
-      releaseDate: "13 Sep 2024",
-    },
-    {
-      title: "Oppenheimer",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BMDBmYTZjNjUtN2M1MS00MTQ2LTk2ODgtNzc2M2QyZGE5NTVjXkEyXkFqcGdeQXVyNzAwMjU2MTY@._V1_SX300.jpg",
-      releaseDate: "21 Jul 2023",
-    },
-    {
-      title: "Mission: Impossible - Dead Reckoning Part One",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BYzFiZjc1YzctMDY3Zi00NGE5LTlmNWEtN2Q3OWFjYjY1NGM2XkEyXkFqcGdeQXVyMTUyMTUzNjQ0._V1_SX300.jpg",
-      releaseDate: "12 Jul 2023",
-    },
-    {
-      title: "Barbie",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BOWIwZGY0OTYtZjUzYy00NzRmLTg5YzgtYWMzNWQ0MmZiY2MwXkEyXkFqcGdeQXVyMTUzMTg2ODkz._V1_SX300.jpg",
-      releaseDate: "21 Jul 2023",
-    },
-    {
-      title: "The Marvels",
-      imageUrl:
-        "https://m.media-amazon.com/images/M/MV5BM2U2YWU5NWMtOGI2Ni00MGMwLWFkNjItMjgyZWMxNjllNTMzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
-      releaseDate: "10 Nov 2023",
-    },
-  ];
-
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="max-w-7xl w-full px-4">

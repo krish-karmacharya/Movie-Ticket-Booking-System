@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-const AboutUs: React.FC = () => {
-  const [activeFeature, setActiveFeature] = useState<string | null>(null);
+const AboutUs = () => {
+  const [activeFeature, setActiveFeature] = useState(null);
 
   const features = [
     {

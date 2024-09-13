@@ -17,7 +17,7 @@ function App() {
 
 
       <Header />
-      {/* <StreamingSection /> */}
+      <StreamingSection />
       {/* <NowShowingBooking /> */}
       {/* <AboutUs /> */}
       {/* <LoginPage /> */}

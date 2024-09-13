@@ -1,6 +1,7 @@
 import React from "react";
 
-const LoginPage: React.FC = () => {
+
+const LoginPage = () => {
   return (
     <div className="font-[sans-serif]">
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">

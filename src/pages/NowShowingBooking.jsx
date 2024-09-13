@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-const NowShowingBooking: React.FC = () => {
-  const [selectedStep, setSelectedStep] = useState<number | null>(null);
+const NowShowingBooking = () => {
+  const [selectedStep, setSelectedStep] = useState(null);
 
-  const toggleStep = (step: number) => {
+  const toggleStep = (step) => {
     setSelectedStep(selectedStep === step ? null : step);
   };
 

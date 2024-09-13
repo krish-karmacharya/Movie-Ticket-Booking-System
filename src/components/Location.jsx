@@ -1,12 +1,7 @@
 import React, { useState } from "react";
 
-interface Location {
-  id: number;
-  name: string;
-}
-
-const Location: React.FC = () => {
-  const locations: Location[] = [
+const Location = () => {
+  const locations = [
     { id: 1, name: "Kathmandu" },
     { id: 2, name: "Birtamode" },
     { id: 3, name: "Nepalgunj" },
@@ -20,15 +15,13 @@ const Location: React.FC = () => {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<Location>(
-    locations[0]
-  );
+  const [selectedLocation, setSelectedLocation] = useState(locations[0]);
 
   const toggleLocationDropdown = () => {
     setIsOpen(!isOpen);
   };
 
-  const handleLocationSelect = (location: Location) => {
+  const handleLocationSelect = (location) => {
     setSelectedLocation(location);
     setIsOpen(false);
   };
@@ -58,11 +51,10 @@ const Location: React.FC = () => {
                   <button
                     key={location.id}
                     onClick={() => handleLocationSelect(location)}
-                    className={`text-left px-3 py-2 text-sm rounded-md ${
-                      selectedLocation.id === location.id
+                    className={`text-left px-3 py-2 text-sm rounded-md ${selectedLocation.id === location.id
                         ? "bg-[#00C4FF] text-white"
                         : "bg-[#4D4D4D] text-white hover:bg-[#5A5A5A]"
-                    }`}
+                      }`}
                     role="menuitem"
                   >
                     {location.name}
