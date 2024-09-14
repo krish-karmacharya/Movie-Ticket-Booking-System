@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Header from "../components/Header";
 
 const AboutUs = () => {
   const [activeFeature, setActiveFeature] = useState(null);
@@ -48,7 +49,8 @@ const AboutUs = () => {
     },
   ];
 
-  return (
+  return (<>
+    <Header />
     <div className="bg-[#1E2028] text-white min-h-screen py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8 text-center">About Us</h1>
@@ -76,6 +78,7 @@ const AboutUs = () => {
           <h2 className="text-2xl font-semibold mb-4">Our Features:</h2>
           <div className="grid grid-cols-2 gap-4 mb-8">
             {features.map((feature, index) => (
+
               <div
                 key={index}
                 className="bg-[#2A2D36] p-4 rounded-lg cursor-pointer transition-all duration-300 hover:bg-[#3A3D46]"
@@ -119,6 +122,7 @@ const AboutUs = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

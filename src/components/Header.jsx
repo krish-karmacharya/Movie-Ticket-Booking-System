@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCity, setSelectedCity] = useState("Bhaktapur");
   const [isCitySelectorOpen, setIsCitySelectorOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -15,49 +16,62 @@ const Header = () => {
   };
 
   const cities = [
-    "Kathmandu", "Birtamode", "Nepalgunj", "Narayangarh", "Itahari",
+    "Bhaktapur", "Kathmandu", "Birtamode", "Nepalgunj", "Narayangarh", "Itahari",
     "Birgunj", "Biratnagar", "Butwal", "Damauli", "Pokhara",
   ];
 
   const handleCityClick = (city) => {
     setSelectedCity(city);
     setIsCitySelectorOpen(false);
+    updateMapLocation(city);
   };
 
+  const updateMapLocation = (city) => {
+    // This function would update the map location based on the selected city
+    // You'd need to implement this functionality, possibly using a mapping library
+    console.log(`Updating map location to ${city}`);
+    // Example: if using Google Maps
+    // map.setCenter(cityCoordinates[city]);
+  };
+
+  useEffect(() => {
+    // Initialize map with default city
+    updateMapLocation(selectedCity);
+  }, []);
+
   return (
-    <nav className="bg-[#1E2028] text-white p-3">
+    <nav className="bg-[#1E2028] text-white p-3 fixed top-0 left-0 right-0 z-50">
       {/* Desktop menu */}
       <div className="hidden md:flex justify-between items-center container mx-auto px-4 py-2">
-        <a
-          href="#"
+        <NavLink to="/"
           className="font-bold text-2xl text-white bg-blue-600 px-3 py-1 rounded"
         >
           Logo
-        </a>
+        </NavLink>
         <ul className="flex space-x-6">
           <li>
             <button onClick={toggleCitySelector} className="hover:text-gray-300 text-lg">
-              {selectedCity || "Select City"}
+              {selectedCity}
             </button>
           </li>
           <li>
-            <a href="all_movies.html" className="hover:text-gray-300 text-lg">
+            <NavLink to="/" className="hover:text-gray-300 text-lg">
               Movies
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-gray-300 text-lg">
+            <NavLink to="/UpComming" className="hover:text-gray-300 text-lg">
               Upcoming
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-gray-300 text-lg">
+            <NavLink to="/StreamingSection" className="hover:text-gray-300 text-lg">
               Trending
-            </a>
+            </NavLink>
           </li>
           <li>
             <div className="flex items-center justify-center space-x-2">
-              <button type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign Up</button>
+              <NavLink to="/Loginpage" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Sign Up</NavLink>
             </div>
           </li>
         </ul>
@@ -92,7 +106,7 @@ const Header = () => {
                 <ul className="py-4">
                   <li className="px-6 py-2">
                     <button onClick={toggleCitySelector} className="text-gray-800 hover:bg-gray-100 text-lg">
-                      {selectedCity || "Select City"}
+                      {selectedCity}
                     </button>
                   </li>
                   <li>

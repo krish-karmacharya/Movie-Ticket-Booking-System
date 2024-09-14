@@ -1,8 +1,10 @@
 import React from "react";
+import Header from "../components/Header";
 
 
 const LoginPage = () => {
-  return (
+  return (<>
+    <Header />
     <div className="font-[sans-serif]">
       <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
         <div className="grid md:grid-cols-2 items-center gap-10 max-w-6xl w-full">
@@ -140,6 +142,7 @@ const LoginPage = () => {
         </div>
       </div>
     </div>
+  </>
   );
 };
 

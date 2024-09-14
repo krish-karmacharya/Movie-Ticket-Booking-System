@@ -1,6 +1,7 @@
 import React from "react";
 import streamingMovies from "../DataFiles/Streaming.json";
 import upcomingMovies from "../DataFiles/Upcomming.json";
+import Header from "../components/Header";
 
 const StreamingSection = () => {
   const MovieGrid = ({ title, movies }) => (
@@ -51,12 +52,15 @@ const StreamingSection = () => {
   );
 
   return (
-    <div className="w-full bg-white">
-      <div className="container mx-auto px-4 py-8">
-        <MovieGrid title="Streaming" movies={streamingMovies} />
-        <MovieGrid title="Upcoming Movies" movies={upcomingMovies} />
+    <>
+      <Header />
+      <div className="w-full bg-white">
+        <div className="container mx-auto px-4 py-8">
+          <MovieGrid title="Streaming" movies={streamingMovies} />
+          <MovieGrid title="Upcoming Movies" movies={upcomingMovies} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -1,13 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 const Footer = () => {
+  const [selectedCity, setSelectedCity] = useState("Bhaktapur");
+
+  useEffect(() => {
+    // You might want to implement a way to get the selected city from the Header component
+    // For now, we'll just use a dummy function to simulate this
+    const getSelectedCity = () => {
+      // This should be replaced with actual logic to get the selected city
+      return localStorage.getItem('selectedCity') || "Bhaktapur";
+    };
+
+    setSelectedCity(getSelectedCity());
+  }, []);
+
+  const getMapEmbedUrl = (city) => {
+    const cityCoordinates = {
+      "Bhaktapur": "27.67240748280386,85.42729731506156",
+      "Kathmandu": "27.7172,85.3240",
+      "Birtamode": "26.6425,87.9842",
+      "Nepalgunj": "28.0500,81.6167",
+      "Narayangarh": "27.6833,84.4333",
+      "Itahari": "26.6667,87.2833",
+      "Birgunj": "27.0167,84.8833",
+      "Biratnagar": "26.4567,87.2667",
+      "Butwal": "27.7000,83.4500",
+      "Damauli": "27.9833,84.2833",
+      "Pokhara": "28.2096,83.9856",
+    };
+
+    const coordinates = cityCoordinates[city] || cityCoordinates["Bhaktapur"];
+    return `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14000!2d${coordinates.split(',')[1]}!3d${coordinates.split(',')[0]}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1aae42806ba1%3A0x5449e079404e5e82!2s${city}!5e0!3m2!1sen!2snp!4v1651234567890!5m2!1sen!2snp`;
+  };
+
   return (
     <footer className="bg-gray-800 text-white mt-8">
       <div className="container mx-auto py-8 px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="w-full md:w-1/2 mb-6 md:mb-0">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3533.0305644794424!2d85.42729731506156!3d27.67240748280386!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb1aae42806ba1%3A0x5449e079404e5e82!2sBhaktapur%20Multiple%20Campus!5e0!3m2!1sen!2snp!4v1651234567890!5m2!1sen!2snp"
+              src={getMapEmbedUrl(selectedCity)}
               width="100%"
               height="300"
               style={{ border: 0 }}
@@ -18,8 +50,8 @@ const Footer = () => {
           </div>
           <div className="w-full md:w-1/2 text-center md:text-right">
             <p>&copy; 2023 Your Company Name. All rights reserved.</p>
-            <p className="mt-2">Bhaktapur Multiple Campus</p>
-            <p>Bhaktapur, Nepal</p>
+            <p className="mt-2">{selectedCity} Multiple Campus</p>
+            <p>{selectedCity}, Nepal</p>
             <div className="mt-4 flex justify-center md:justify-end">
               <a
                 href="https://facebook.com"
