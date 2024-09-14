@@ -4,14 +4,17 @@ const Footer = () => {
   const [selectedCity, setSelectedCity] = useState("Bhaktapur");
 
   useEffect(() => {
-    // You might want to implement a way to get the selected city from the Header component
-    // For now, we'll just use a dummy function to simulate this
-    const getSelectedCity = () => {
-      // This should be replaced with actual logic to get the selected city
-      return localStorage.getItem('selectedCity') || "Bhaktapur";
+    const handleCityChange = (event) => {
+      if (event.detail && event.detail.city) {
+        setSelectedCity(event.detail.city);
+      }
     };
 
-    setSelectedCity(getSelectedCity());
+    window.addEventListener('cityChanged', handleCityChange);
+
+    return () => {
+      window.removeEventListener('cityChanged', handleCityChange);
+    };
   }, []);
 
   const getMapEmbedUrl = (city) => {

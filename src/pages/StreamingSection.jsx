@@ -2,6 +2,7 @@ import React from "react";
 import streamingMovies from "../DataFiles/Streaming.json";
 import upcomingMovies from "../DataFiles/Upcomming.json";
 import Header from "../components/Header";
+import NowShowingBooking from "./NowShowingBooking";
 
 const StreamingSection = () => {
   const MovieGrid = ({ title, movies }) => (
@@ -26,7 +27,10 @@ const StreamingSection = () => {
             {title === "Streaming" && (
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100"></div>
-                <button className="bg-red-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300 z-10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50">
+                <button
+                  onClick={() => window.location.href = '/NowShowingBooking'}
+                  className="bg-red-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-red-700 transition-colors duration-300 z-10 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-opacity-50"
+                >
                   Watch Now
                 </button>
               </div>
@@ -34,7 +38,10 @@ const StreamingSection = () => {
             {title === "Upcoming Movies" && (
               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100"></div>
-                <button className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                <button
+                  onClick={() => window.location.href = '/NowShowingBooking'}
+                  className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+                >
                   Pre-book
                 </button>
               </div>
