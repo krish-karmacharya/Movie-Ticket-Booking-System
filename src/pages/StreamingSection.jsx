@@ -1,8 +1,8 @@
 import React from "react";
 import streamingMovies from "../DataFiles/Streaming.json";
 import upcomingMovies from "../DataFiles/Upcomming.json";
-import Header from "../components/Header";
 import NowShowingBooking from "./NowShowingBooking";
+import Nav from "../components/Nav";
 
 const StreamingSection = () => {
   const MovieGrid = ({ title, movies }) => (
@@ -60,7 +60,7 @@ const StreamingSection = () => {
 
   return (
     <>
-      <Header />
+      <Nav />
       <div className="w-full bg-white">
         <div className="container mx-auto px-4 py-8">
           <MovieGrid title="Streaming" movies={streamingMovies} />

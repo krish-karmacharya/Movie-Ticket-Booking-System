@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
+import Nav from "../components/Nav";
 
 const NowShowingBooking = () => {
   const [selectedStep, setSelectedStep] = useState(null);
@@ -10,7 +10,7 @@ const NowShowingBooking = () => {
 
   return (
     <>
-      <Header />
+      <Nav />
       <div className="container mx-auto px-4 py-8 mt-16"> {/* Added mt-16 for top margin */}
         <div className="flex flex-col md:flex-row"> {/* Changed to flex-col on mobile */}
           <div className="w-full md:w-1/4 mb-6 md:mb-0"> {/* Full width on mobile, 1/4 on larger screens */}

@@ -1,7 +1,9 @@
 import React from 'react';
+import Header from '../components/Nav';
 
 const CreateAccountForm = () => {
-    return (
+    return (<>
+        <Header />
         <div className="bg-gray-900 text-gray-300 p-8 rounded-lg max-w-md mx-auto">
             <h1 className="text-2xl font-bold text-white mb-2">Create an account</h1>
             <p className="text-sm mb-6">
@@ -97,7 +99,7 @@ const CreateAccountForm = () => {
                 </a>
             </p>
         </div>
-    );
+    </>);
 };
 
 export default CreateAccountForm;

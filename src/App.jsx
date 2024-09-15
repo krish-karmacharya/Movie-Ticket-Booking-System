@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Footer from "./components/Footer";
-import Header from "./components/Header";
+import Nav from "./components/Nav";
 import StreamingSection from "./pages/StreamingSection";
 import Location from "./components/Location";
 import UpComming from "./pages/UpComming";
-import LoginPage from "./pages/Loginpage";
 import AboutUs from "./pages/AboutUs";
 import NowShowingBooking from "./pages/NowShowingBooking";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
@@ -24,12 +23,12 @@ function App() {
           <Route path="/UpComming" element={<UpComming />} />
           <Route path="/StreamingSection" element={<StreamingSection />} />
           <Route path="/AboutUs" element={<AboutUs />} />
-          <Route path="/Loginpage" element={<LoginPage />} />
           <Route path="/NowShowingBooking" element={<NowShowingBooking />} />
           <Route path="/SignInForm" element={<SignInForm />} />
           <Route path="/CreateAccountForm" element={<CreateAccountForm />} />
         </Routes>
       </BrowserRouter>
+      <Footer />
     </>
   );
 }

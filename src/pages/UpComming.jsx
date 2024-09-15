@@ -1,6 +1,6 @@
 import React from "react";
 import upcomingMovies from "../DataFiles/Upcomming.json";
-import Header from "../components/Header";
+import Header from "../components/Nav";
 
 function UpComming() {
   return (

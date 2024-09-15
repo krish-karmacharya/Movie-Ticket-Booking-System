@@ -1,6 +1,6 @@
 import React from 'react';
-import Header from '../components/Header';
-
+import Header from '../components/Nav';
+import CreateAccountForm from './CreateAccountForm';
 const SignInForm = () => {
     return (<>
         <Header />

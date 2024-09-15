@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Header from "../components/Header";
+import Nav from "../components/Nav";
 
 const AboutUs = () => {
   const [activeFeature, setActiveFeature] = useState(null);
@@ -50,7 +50,7 @@ const AboutUs = () => {
   ];
 
   return (<>
-    <Header />
+    <Nav />
     <div className="bg-[#1E2028] text-white min-h-screen py-12">
       <div className="container mx-auto px-4">
         <h1 className="text-4xl font-bold mb-8 text-center">About Us</h1>
