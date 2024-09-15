@@ -3,6 +3,7 @@ import streamingMovies from "../DataFiles/Streaming.json";
 import upcomingMovies from "../DataFiles/Upcomming.json";
 import NowShowingBooking from "./NowShowingBooking";
 import Nav from "../components/Nav";
+import UpComming from "./UpComming";
 
 const StreamingSection = () => {
   const MovieGrid = ({ title, movies }) => (
@@ -61,10 +62,11 @@ const StreamingSection = () => {
   return (
     <>
       <Nav />
-      <div className="w-full bg-white">
+      <div className="w-full bg-white pt-16"> {/* Added pt-16 for top padding */}
         <div className="container mx-auto px-4 py-8">
           <MovieGrid title="Streaming" movies={streamingMovies} />
-          <MovieGrid title="Upcoming Movies" movies={upcomingMovies} />
+          {/* <MovieGrid title="Upcoming Movies" movies={upcomingMovies} /> */}
+          <UpComming />
         </div>
       </div>
     </>

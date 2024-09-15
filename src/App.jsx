@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import StreamingSection from "./pages/StreamingSection";
-import Location from "./components/Location";
 import UpComming from "./pages/UpComming";
 import AboutUs from "./pages/AboutUs";
 import NowShowingBooking from "./pages/NowShowingBooking";
@@ -10,6 +9,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Movies from "./pages/Movies";
 import SignInForm from "./pages/SignInForm";
 import CreateAccountForm from "./pages/CreateAccountForm";
+
 function App() {
 
   const [count, setCount] = useState(0);
@@ -28,7 +28,10 @@ function App() {
           <Route path="/CreateAccountForm" element={<CreateAccountForm />} />
         </Routes>
       </BrowserRouter>
+
       <Footer />
+
+
     </>
   );
 }

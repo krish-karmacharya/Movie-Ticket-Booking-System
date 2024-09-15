@@ -1,12 +1,11 @@
 import React from "react";
-import Header from "../components/Nav";
+import Nav from "../components/Nav";
 import StreamingSection from "./StreamingSection";
-import UpComming from "./UpComming";
 
 const Movies = () => {
     return (
         <div className="flex flex-col min-h-screen">
-            <Header />
+            <Nav />
             <main className="flex-grow">
                 <StreamingSection />
             </main>

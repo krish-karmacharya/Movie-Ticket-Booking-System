@@ -59,6 +59,47 @@ const NowShowingBooking = () => {
               {selectedStep === 1 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
                   {/* Content for Step 1 */}
+                  <div className="space-y-4">
+                    <div>
+                      <h3 className="font-semibold mb-2">Select Date</h3>
+                      <div className="flex space-x-2">
+                        {['Today', 'Tomorrow', 'Day After'].map((day, index) => (
+                          <button key={index} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
+                            {day}
+                            <br />
+                            {new Date(Date.now() + index * 24 * 60 * 60 * 1000).toLocaleDateString('en-US', { day: '2-digit', month: '2-digit' })}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">Select Language</h3>
+                      <div className="flex space-x-2">
+                        {['English', 'Hindi', 'Nepali'].map((lang) => (
+                          <button key={lang} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
+                            {lang}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold mb-2">Select Time</h3>
+                      <div className="flex flex-wrap gap-2">
+                        {['10:00', '13:00', '16:00', '19:00', '22:00'].map((time) => (
+                          <button key={time} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
+                            {time}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-4" role="alert">
+                      <p className="font-bold">Please Note</p>
+                      <p>Tickets will be required for all admissions. Infants will not be admitted.</p>
+                    </div>
+                  </div>
                 </div>
               )}
             </div>

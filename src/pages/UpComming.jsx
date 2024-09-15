@@ -1,13 +1,13 @@
 import React from "react";
 import upcomingMovies from "../DataFiles/Upcomming.json";
-import Header from "../components/Nav";
+import Nav from "../components/Nav";
 
 function UpComming() {
   return (
     <>
-      <Header />
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="max-w-7xl w-full px-4">
+      <Nav />
+      <div className="flex justify-center items-center min-h-screen pt-16"> {/* Reduced padding-top to pt-16 */}
+        <div className="max-w-7xl w-full px-4 mt-8"> {/* Reduced margin-top */}
           <h2 className="text-3xl font-bold mb-4 text-black">Upcoming Movies</h2>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
             {upcomingMovies.map((movie, index) => (
