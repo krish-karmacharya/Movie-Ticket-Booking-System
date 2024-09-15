@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav";
+import OnclickUpcomming from "../components/OnclickUpcomming";
 
 const NowShowingBooking = () => {
   const [selectedStep, setSelectedStep] = useState(null);
@@ -11,13 +12,13 @@ const NowShowingBooking = () => {
   return (
     <>
       <Nav />
-      <div className="container mx-auto px-4 py-8 mt-16"> {/* Added mt-16 for top margin */}
-        <div className="flex flex-col md:flex-row"> {/* Changed to flex-col on mobile */}
-          <div className="w-full md:w-1/4 mb-6 md:mb-0"> {/* Full width on mobile, 1/4 on larger screens */}
+      <div className="container mx-auto px-4 py-8 mt-16">
+        <div className="flex flex-col md:flex-row">
+          <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <img
               src="https://via.placeholder.com/150x300?text=Movie+Poster"
               alt="Movie Poster"
-              className="rounded-lg shadow-lg mx-auto md:mx-0" /* Centered on mobile */
+              className="rounded-lg shadow-lg mx-auto md:mx-0"
             />
             <h2 className="text-xl font-bold mt-4 text-center md:text-left">Stree 2</h2>
             <p className="text-gray-600 text-center md:text-left">2 hrs 30 mins | Horror, Comedy</p>
@@ -58,7 +59,6 @@ const NowShowingBooking = () => {
               </button>
               {selectedStep === 1 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
-                  {/* Content for Step 1 */}
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold mb-2">Select Date</h3>
@@ -113,7 +113,7 @@ const NowShowingBooking = () => {
               </button>
               {selectedStep === 2 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
-                  {/* Content for Step 2 */}
+
                 </div>
               )}
             </div>

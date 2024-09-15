@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Footer from "./components/Footer";
 import Nav from "./components/Nav";
 import StreamingSection from "./pages/StreamingSection";
@@ -9,15 +9,13 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Movies from "./pages/Movies";
 import SignInForm from "./pages/SignInForm";
 import CreateAccountForm from "./pages/CreateAccountForm";
+import OnclickUpcoming from "./components/OnclickUpcomming";
 
 function App() {
-
-  const [count, setCount] = useState(0);
-
   return (
     <>
-
       <BrowserRouter>
+        <Nav />
         <Routes>
           <Route path="/" element={<Movies />} />
           <Route path="/UpComming" element={<UpComming />} />
@@ -26,12 +24,10 @@ function App() {
           <Route path="/NowShowingBooking" element={<NowShowingBooking />} />
           <Route path="/SignInForm" element={<SignInForm />} />
           <Route path="/CreateAccountForm" element={<CreateAccountForm />} />
+          <Route path="/OnclickUpcomming" element={<OnclickUpcoming />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
-
-      <Footer />
-
-
     </>
   );
 }
