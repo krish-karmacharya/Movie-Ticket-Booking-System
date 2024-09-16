@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Nav from "../components/Nav";
 import OnclickUpcomming from "../components/OnclickUpcomming";
+import Seats from "../components/Seats";
 
 const NowShowingBooking = () => {
   const [selectedStep, setSelectedStep] = useState(null);
@@ -113,7 +114,7 @@ const NowShowingBooking = () => {
               </button>
               {selectedStep === 2 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
-
+                  <Seats />
                 </div>
               )}
             </div>

@@ -35,7 +35,7 @@ function UpComming() {
                   <div className="absolute inset-0 bg-black bg-opacity-50 backdrop-blur-sm transition-all duration-300 group-hover:opacity-100"></div>
                   <button
                     className="bg-blue-600 text-white py-2 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-300 z-10 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
-                    onClick={() => handlePreOrder(movie)}
+                    onClick={() => navigate('/OnclickUpcomming', { state: { movie } })}
                   >
                     Pre-book
                   </button>

@@ -10,6 +10,7 @@ import Movies from "./pages/Movies";
 import SignInForm from "./pages/SignInForm";
 import CreateAccountForm from "./pages/CreateAccountForm";
 import OnclickUpcoming from "./components/OnclickUpcomming";
+import Seats from "./components/Seats";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/SignInForm" element={<SignInForm />} />
           <Route path="/CreateAccountForm" element={<CreateAccountForm />} />
           <Route path="/OnclickUpcomming" element={<OnclickUpcoming />} />
+          {/* <Route path="/Seats" element={<Seats />} /> */}
         </Routes>
         <Footer />
       </BrowserRouter>
