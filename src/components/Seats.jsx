@@ -10,6 +10,9 @@ const Seats = () => {
     const handleResize = () => {
       const width = window.innerWidth;
       if (width < 640) {
+        setRows(6);
+        setSeatsPerRow(6);
+      } else if (width < 768) {
         setRows(8);
         setSeatsPerRow(8);
       } else if (width < 1024) {
@@ -54,13 +57,14 @@ const Seats = () => {
   };
 
   return (
-    <div className="flex flex-col items-center mt-8">
-      <div className="mb-4 w-3/4 h-2 bg-cyan-500 rounded"></div>
+
+    <div className="flex flex-col items-center mt-8 px-4">
+      <div className="mb-4 w-full max-w-3xl h-2 bg-cyan-500 rounded"></div>
       <p className="mb-4 text-lg font-semibold">Screen</p>
-      <div className="grid gap-2">
+      <div className="grid gap-1 sm:gap-2">
         {[...Array(rows)].map((_, rowIndex) => (
-          <div key={rowIndex} className="flex justify-center gap-2">
-            <span className="w-6 text-right mr-2">{String.fromCharCode(65 + rowIndex)}</span>
+          <div key={rowIndex} className="flex justify-center gap-1 sm:gap-2">
+            <span className="w-4 sm:w-6 text-right mr-1 sm:mr-2 text-xs sm:text-sm">{String.fromCharCode(65 + rowIndex)}</span>
             {[...Array(seatsPerRow)].map((_, seatIndex) => {
               const status = getSeatStatus(rowIndex, seatIndex);
               return (
@@ -69,42 +73,42 @@ const Seats = () => {
                   className={`focus:outline-none ${getSeatColor(status)}`}
                   onClick={() => handleSeatClick(rowIndex, seatIndex)}
                 >
-                  <FaCouch size={20} />
+                  <FaCouch size={16} className="sm:text-lg md:text-xl" />
                 </button>
               );
             })}
-            <span className="w-6 text-left ml-2">{String.fromCharCode(65 + rowIndex)}</span>
+            <span className="w-4 sm:w-6 text-left ml-1 sm:ml-2 text-xs sm:text-sm">{String.fromCharCode(65 + rowIndex)}</span>
           </div>
         ))}
       </div>
       <div className="mt-4 flex justify-center">
         {[...Array(seatsPerRow)].map((_, index) => (
-          <span key={index} className="w-5 text-center text-sm">{index + 1}</span>
+          <span key={index} className="w-4 sm:w-5 text-center text-xs sm:text-sm">{index + 1}</span>
         ))}
       </div>
-      <div className="mt-8 flex flex-wrap justify-center gap-4 sm:gap-8">
+      <div className="mt-8 flex flex-wrap justify-center gap-2 sm:gap-4">
         <div className="flex items-center">
-          <FaCouch className="text-green-500 mr-2" />
-          <span>Available</span>
+          <FaCouch className="text-green-500 mr-1 sm:mr-2 text-sm sm:text-base" />
+          <span className="text-xs sm:text-sm">Available</span>
         </div>
         <div className="flex items-center">
-          <FaCouch className="text-blue-500 mr-2" />
-          <span>Reserved</span>
+          <FaCouch className="text-blue-500 mr-1 sm:mr-2 text-sm sm:text-base" />
+          <span className="text-xs sm:text-sm">Reserved</span>
         </div>
         <div className="flex items-center">
-          <FaCouch className="text-red-500 mr-2" />
-          <span>Sold</span>
+          <FaCouch className="text-red-500 mr-1 sm:mr-2 text-sm sm:text-base" />
+          <span className="text-xs sm:text-sm">Sold</span>
         </div>
         <div className="flex items-center">
-          <FaCouch className="text-yellow-500 mr-2" />
-          <span>Picking</span>
+          <FaCouch className="text-yellow-500 mr-1 sm:mr-2 text-sm sm:text-base" />
+          <span className="text-xs sm:text-sm">Picking</span>
         </div>
         <div className="flex items-center">
-          <FaCouch className="text-gray-500 mr-2" />
-          <span>Unavailable</span>
+          <FaCouch className="text-gray-500 mr-1 sm:mr-2 text-sm sm:text-base" />
+          <span className="text-xs sm:text-sm">Unavailable</span>
         </div>
       </div>
-      <button className="mt-8 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+      <button className="mt-8 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 text-sm sm:text-base">
         Buy Now
       </button>
     </div>

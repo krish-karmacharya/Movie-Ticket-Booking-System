@@ -25,15 +25,15 @@ const SignInForm = () => {
     return (
         <>
             <Nav />
-            <div className="p-40 pb-10">
-                <div className="bg-gray-900 text-gray-300 p-8 rounded-lg max-w-md mx-auto">
-                    <h1 className="text-2xl font-bold text-white mb-2">Sign in to your account</h1>
+            <div className="pt-16 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-20 2xl:p-40 pb-10">
+                <div className="bg-gray-900 text-gray-300 p-4 sm:p-6 md:p-8 rounded-lg max-w-md mx-auto w-full">
+                    <h1 className="text-xl sm:text-2xl font-bold text-white mb-2">Sign in to your account</h1>
                     <p className="text-sm mb-6">
                         Welcome back! Please enter your details to access your account.
                     </p>
 
-                    <form onSubmit={handleSubmit}>
-                        <div className="mb-4">
+                    <form onSubmit={handleSubmit} className="space-y-4">
+                        <div>
                             <label htmlFor="email" className="block text-sm font-medium mb-2">
                                 Your email
                             </label>
@@ -48,7 +48,7 @@ const SignInForm = () => {
                             />
                         </div>
 
-                        <div className="mb-4">
+                        <div>
                             <label htmlFor="password" className="block text-sm font-medium mb-2">
                                 Your password
                             </label>
@@ -62,7 +62,7 @@ const SignInForm = () => {
                             />
                         </div>
 
-                        <div className="flex items-center justify-between mb-6">
+                        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
                             <div className="flex items-center">
                                 <input
                                     type="checkbox"
@@ -82,7 +82,7 @@ const SignInForm = () => {
 
                         <button
                             type="submit"
-                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900 mb-4"
+                            className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-gray-900"
                         >
                             Sign in to account
                         </button>
@@ -97,7 +97,7 @@ const SignInForm = () => {
                         </button>
                     </form>
 
-                    <p className="mt-4 text-sm">
+                    <p className="mt-4 text-sm text-center">
                         Not registered?{' '}
                         <NavLink to="/CreateAccountForm" className="text-blue-500 hover:underline">
                             Create an account
