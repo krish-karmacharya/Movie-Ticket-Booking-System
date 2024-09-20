@@ -63,7 +63,7 @@ const NowShowingBooking = () => {
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold mb-2">Select Date</h3>
-                      <div className="flex space-x-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {['Today', 'Tomorrow', 'Day After'].map((day, index) => (
                           <button key={index} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
                             {day}
@@ -76,7 +76,7 @@ const NowShowingBooking = () => {
 
                     <div>
                       <h3 className="font-semibold mb-2">Select Language</h3>
-                      <div className="flex space-x-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                         {['English', 'Hindi', 'Nepali'].map((lang) => (
                           <button key={lang} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
                             {lang}
@@ -87,7 +87,7 @@ const NowShowingBooking = () => {
 
                     <div>
                       <h3 className="font-semibold mb-2">Select Time</h3>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2">
                         {['10:00', '13:00', '16:00', '19:00', '22:00'].map((time) => (
                           <button key={time} className="bg-gray-200 hover:bg-gray-300 text-gray-800 font-semibold py-2 px-4 rounded">
                             {time}

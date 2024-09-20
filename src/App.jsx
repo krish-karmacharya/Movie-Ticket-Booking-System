@@ -11,6 +11,7 @@ import SignInForm from "./pages/SignInForm";
 import CreateAccountForm from "./pages/CreateAccountForm";
 import OnclickUpcoming from "./components/OnclickUpcomming";
 import Seats from "./components/Seats";
+import Profile from "./pages/Profile";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
           <Route path="/CreateAccountForm" element={<CreateAccountForm />} />
           <Route path="/OnclickUpcomming" element={<OnclickUpcoming />} />
           {/* <Route path="/Seats" element={<Seats />} /> */}
+          <Route path="/Profile" element={<Profile />} />
+
         </Routes>
         <Footer />
       </BrowserRouter>
