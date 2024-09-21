@@ -12,7 +12,7 @@ import CreateAccountForm from "./pages/CreateAccountForm";
 import OnclickUpcoming from "./components/OnclickUpcomming";
 import Seats from "./components/Seats";
 import Profile from "./pages/Profile";
-import GiftShow from "./pages/GiftShow";
+import GiftAShow from "./pages/GiftAShow";
 
 function App() {
   return (
@@ -30,7 +30,7 @@ function App() {
           <Route path="/OnclickUpcomming" element={<OnclickUpcoming />} />
           {/* <Route path="/Seats" element={<Seats />} /> */}
           <Route path="/Profile" element={<Profile />} />
-          <Route path="/GiftShow" element={<GiftShow />} />
+          <Route path="/GiftAShow" element={<GiftAShow />} />
 
         </Routes>
         <Footer />
