@@ -114,7 +114,7 @@ const NowShowingBooking = () => {
               </button>
               {selectedStep === 2 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
-                  <Seats />
+                  <Seats totalSeats={20} />
                 </div>
               )}
             </div>
