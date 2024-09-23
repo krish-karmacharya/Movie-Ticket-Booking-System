@@ -1,14 +1,30 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Nav from "../components/Nav";
-import OnclickUpcomming from "../components/OnclickUpcomming";
 import Seats from "../components/Seats";
 
 const NowShowingBooking = () => {
   const [selectedStep, setSelectedStep] = useState(null);
+  const [movie, setMovie] = useState(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (location.state && location.state.movie) {
+      setMovie(location.state.movie);
+    } else {
+      // Redirect to the home page or show an error message if no movie data is available
+      navigate('/');
+    }
+  }, [location, navigate]);
 
   const toggleStep = (step) => {
     setSelectedStep(selectedStep === step ? null : step);
   };
+
+  if (!movie) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -17,36 +33,32 @@ const NowShowingBooking = () => {
         <div className="flex flex-col md:flex-row">
           <div className="w-full md:w-1/4 mb-6 md:mb-0">
             <img
-              src="https://via.placeholder.com/150x300?text=Movie+Poster"
-              alt="Movie Poster"
+              src={movie.imageUrl || "https://via.placeholder.com/150x300?text=Movie+Poster"}
+              alt={`${movie.title} Poster`}
               className="rounded-lg shadow-lg mx-auto md:mx-0"
             />
-            <h2 className="text-xl font-bold mt-4 text-center md:text-left">Stree 2</h2>
-            <p className="text-gray-600 text-center md:text-left">2 hrs 30 mins | Horror, Comedy</p>
-            <p className="text-gray-600 mt-2 text-center md:text-left">
-              "Stree 2" unfolds strange events in the town of Chanderi, where men
-              start disappearing mysteriously. The town's residents believe it's
-              the work of an evil spirit named Stree.
-            </p>
-            <a href="#" className="text-blue-500 mt-4 block text-center md:text-left">
-              View More details
-            </a>
+            <h2 className="text-3xl font-bold mb-4 text-gray-800">{movie.title}</h2>
+            <p className="text-gray-600 mb-4 text-lg">Release Date: {movie.releaseDate}</p>
+            <p className="text-gray-600 mb-4 text-lg">Genre: {movie.genre}</p>
+            <p className="text-gray-600 mb-6 text-lg">{movie.description}</p>
+            <button className="text-blue-500 hover:text-blue-700 font-bold text-lg">
+              View More Details
+            </button>
           </div>
           <div className="w-full md:w-3/4 md:pl-8">
             <div className="border-b border-gray-300 mb-4">
               <ul className="flex">
                 <li className="mr-6">
-                  <a
-                    href="#"
+                  <button
                     className="text-blue-500 border-b-2 border-blue-500 pb-2"
                   >
                     NOW SHOWING
-                  </a>
+                  </button>
                 </li>
                 <li>
-                  <a href="#" className="text-gray-500 pb-2">
+                  <button className="text-gray-500 pb-2">
                     CHECKOUT
-                  </a>
+                  </button>
                 </li>
               </ul>
             </div>
@@ -114,7 +126,7 @@ const NowShowingBooking = () => {
               </button>
               {selectedStep === 2 && (
                 <div className="p-4 bg-white shadow-md rounded-lg mt-2">
-                  <Seats totalSeats={20} />
+                  <Seats />
                 </div>
               )}
             </div>
