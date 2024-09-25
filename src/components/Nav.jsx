@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { Menu as HeadlessMenu } from '@headlessui/react';
 
 const Nav = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(true); // Changed to true to show profile
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -19,6 +20,10 @@ const Nav = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleTrendingClick = () => {
+    navigate('/Trending');
   };
 
   const NavItems = () => (
@@ -34,9 +39,9 @@ const Nav = () => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/StreamingSection" className="hover:text-gray-300 text-base">
+        <button onClick={handleTrendingClick} className="hover:text-gray-300 text-base">
           Trending
-        </NavLink>
+        </button>
       </li>
       <li>
         <NavLink to="/GiftAShow" className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
@@ -137,9 +142,9 @@ const Nav = () => {
                   </NavLink>
                 </li>
                 <li className="px-5 py-2">
-                  <NavLink to="/StreamingSection" className="block text-gray-800 hover:text-gray-600">
+                  <button onClick={handleTrendingClick} className="block text-gray-800 hover:text-gray-600">
                     Trending
-                  </NavLink>
+                  </button>
                 </li>
                 <li className="px-5 py-2">
                   <NavLink to="/GiftAShow" className="block text-gray-800 hover:text-gray-600 bg-gradient-to-br from-green-400 to-blue-600 text-white py-2 px-4 rounded">
