@@ -43,13 +43,6 @@ const Nav = () => {
           Trending
         </button>
       </li>
-      <li>
-        <NavLink to="/GiftAShow" className="relative inline-flex items-center justify-center p-0.5 mb-2 me-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-green-400 to-blue-600 group-hover:from-green-400 group-hover:to-blue-600 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800">
-          <span className="relative px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-            Gift a Show
-          </span>
-        </NavLink>
-      </li>
     </>
   );
 
@@ -145,11 +138,6 @@ const Nav = () => {
                   <button onClick={handleTrendingClick} className="block text-gray-800 hover:text-gray-600">
                     Trending
                   </button>
-                </li>
-                <li className="px-5 py-2">
-                  <NavLink to="/GiftAShow" className="block text-gray-800 hover:text-gray-600 bg-gradient-to-br from-green-400 to-blue-600 text-white py-2 px-4 rounded">
-                    Gift a Show
-                  </NavLink>
                 </li>
                 {isLoggedIn && (
                   <li className="px-5 py-2">
