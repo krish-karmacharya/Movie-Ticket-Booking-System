@@ -45,8 +45,8 @@ This is a full-stack web application for managing and browsing movies. The proje
 3. Create a `.env` file in the backend directory with the following variables:
 
    ```
-   PORT=5000
-   MONGODB_URI=your_mongodb_connection_string
+   connection string should be changed
+   MONGODB_PASSWORD=your_mongodb_connection_password
    JWT_SECRET=your_jwt_secret
    ```
 
