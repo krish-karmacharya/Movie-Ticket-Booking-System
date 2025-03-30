@@ -1,70 +1,139 @@
-# Getting Started with Create React App
+# Frontend - Movie Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend part of the movie application, built with React.js and Material-UI. It provides a modern, responsive user interface for managing and browsing movies.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **User Interface**
 
-### `npm start`
+  - Clean and modern Material-UI design
+  - Responsive layout that works on all devices
+  - Intuitive navigation with React Router
+  - Loading states and error handling
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **State Management**
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+  - Centralized state management using Redux Toolkit
+  - Efficient data caching and updates
+  - Optimized performance with selective re-rendering
 
-### `npm test`
+- **Authentication**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+  - Secure login and registration forms
+  - Protected routes for authenticated users
+  - JWT token management
+  - Persistent authentication state
 
-### `npm run build`
+- **Movie Management**
+  - List view of all movies
+  - Detailed movie view
+  - Create, update, and delete movie functionality
+  - Search and filter capabilities
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Project Structure
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+```
+frontend/
+├── public/           # Static files
+├── src/
+│   ├── components/   # Reusable UI components
+│   ├── pages/        # Page components
+│   ├── features/     # Redux slices and features
+│   ├── services/     # API services
+│   ├── utils/        # Utility functions
+│   ├── hooks/        # Custom React hooks
+│   └── App.js        # Main application component
+└── package.json      # Project dependencies
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Dependencies
 
-### `npm run eject`
+- `react`: ^18.2.0
+- `@mui/material`: ^5.10.8
+- `@mui/icons-material`: ^5.10.6
+- `@reduxjs/toolkit`: ^1.8.6
+- `react-redux`: ^8.0.4
+- `react-router-dom`: ^6.4.2
+- `axios`: ^1.1.2
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Getting Started
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+1. Install dependencies:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+   ```bash
+   npm install
+   ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+2. Start the development server:
 
-## Learn More
+   ```bash
+   npm start
+   ```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+3. Build for production:
+   ```bash
+   npm run build
+   ```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Development Guidelines
 
-### Code Splitting
+### Component Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Use functional components with hooks
+- Implement proper prop types
+- Follow the container/presenter pattern
+- Keep components focused and single-responsibility
 
-### Analyzing the Bundle Size
+### State Management
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Use Redux for global state
+- Use local state for component-specific data
+- Implement proper loading and error states
+- Cache API responses when appropriate
 
-### Making a Progressive Web App
+### Styling
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- Use Material-UI components when possible
+- Follow the project's theme configuration
+- Implement responsive design
+- Use styled-components for custom styling
 
-### Advanced Configuration
+### Code Quality
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Follow ESLint rules
+- Write meaningful component and function names
+- Add comments for complex logic
+- Keep files focused and maintainable
 
-### Deployment
+## Testing
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+Run tests with:
 
-### `npm run build` fails to minify
+```bash
+npm test
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Contributing
+
+1. Create a new branch for your feature
+2. Make your changes
+3. Run tests and linting
+4. Submit a pull request
+
+## Environment Variables
+
+Create a `.env` file in the frontend directory:
+
+```
+REACT_APP_API_URL=http://localhost:5000/api
+```
+
+## Build and Deployment
+
+The application can be built for production using:
+
+```bash
+npm run build
+```
+
+This creates an optimized production build in the `build` directory.
