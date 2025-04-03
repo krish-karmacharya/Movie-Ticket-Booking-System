@@ -47,6 +47,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
           borderRadius: 20,
           maxWidth: "400px",
           width: "100%",
+          minHeight: isAdmin ? "450px" : "auto",
         },
       }}
       open={true}
@@ -69,24 +70,31 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
         <Paper
           elevation={0}
           sx={{
-            p: 4,
+            p: 3,
             textAlign: "center",
             background: "linear-gradient(135deg, #1a237e 0%, #0d47a1 100%)",
             color: "white",
             borderRadius: "20px 20px 0 0",
+            minHeight: isAdmin ? "100px" : "auto",
           }}
         >
           <Typography variant="h4" sx={{ fontWeight: 700, mb: 1 }}>
-            {isSignup ? "Create Account" : "Welcome Back"}
+            {isAdmin
+              ? "Welcome Admin"
+              : isSignup
+              ? "Create Account"
+              : "Welcome Back"}
           </Typography>
           <Typography variant="body1" sx={{ opacity: 0.9 }}>
-            {isSignup
+            {isAdmin
+              ? "Sign in to access admin dashboard"
+              : isSignup
               ? "Join us to start booking movies"
-              : "Sign in to continue booking"}
+              : "Sign in to your account"}
           </Typography>
         </Paper>
 
-        <Box sx={{ p: 4 }}>
+        <Box sx={{ p: 3, minHeight: isAdmin ? "350px" : "auto" }}>
           <form onSubmit={handleSubmit}>
             {!isAdmin && isSignup && (
               <TextField
