@@ -198,73 +198,29 @@ const Booking = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Check if user is still logged in
     if (!isUserLoggedIn) {
-      setError("Please log in to book tickets");
-      setOpen(true);
-      setTimeout(() => {
-        navigate("/auth");
-      }, 2000);
+      navigate("/auth");
       return;
     }
 
-    if (inputs.seats.length === 0) {
-      setError("Please select at least one seat");
-      setOpen(true);
-      return;
-    }
-
-    if (!inputs.date) {
-      setError("Please select a date");
-      setOpen(true);
-      return;
-    }
-
-    // Validate date again before submission
-    if (inputs.date < today) {
-      setError("Cannot book for past dates");
-      setOpen(true);
-      return;
-    }
-
-    if (movieReleaseDate && inputs.date < movieReleaseDate) {
-      setError("Cannot book before movie release date");
+    if (!inputs.date || inputs.seats.length === 0) {
+      setError("Please select a date and at least one seat");
       setOpen(true);
       return;
     }
 
     try {
-      const userId = localStorage.getItem("userId");
-      if (!userId) {
-        throw new Error("Session expired. Please log in again");
-      }
-
-      // Format the date to ensure consistency
-      const formattedDate = new Date(inputs.date).toISOString();
-
       const response = await newBooking({
-        movie: movie._id,
-        date: formattedDate,
+        movie: id,
+        date: inputs.date,
         seats: inputs.seats,
-        user: userId,
       });
 
-      if (!response || !response.booking) {
-        throw new Error(
-          response?.message || "Booking failed. Please try again"
-        );
+      if (response.booking) {
+        navigate("/payment", { state: { booking: response.booking } });
       }
-
-      setError("");
-      setOpen(true);
-      // Redirect to user profile after 2 seconds
-      setTimeout(() => {
-        navigate("/user");
-      }, 2000);
     } catch (err) {
-      console.error("Booking error:", err);
-      setError(err.message || "Booking failed. Please try again.");
+      setError(err.message || "Failed to create booking");
       setOpen(true);
     }
   };

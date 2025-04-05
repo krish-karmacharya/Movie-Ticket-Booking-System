@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Container,
   Paper,
@@ -11,45 +11,55 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Stepper,
+  Step,
+  StepLabel,
+  Button,
+  Alert,
+  Fade,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
-import AccountBalanceIcon from "@mui/icons-material/AccountBalance";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
-import PhoneIphoneIcon from "@mui/icons-material/PhoneIphone";
-import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import MovieIcon from "@mui/icons-material/Movie";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
+import LocalAtmIcon from "@mui/icons-material/LocalAtm";
 import { useSelector } from "react-redux";
 
-const PaymentOption = styled(Card)(({ theme }) => ({
-  height: "100%",
+const PaymentOption = styled(Card)(({ theme, selected }) => ({
+  width: "100%",
+  margin: "0 auto",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   padding: theme.spacing(2),
   cursor: "pointer",
-  transition: "all 0.3s ease",
-  border: "1px solid transparent",
-  "&:hover": {
-    transform: "translateY(-3px)",
-    boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-    borderColor: theme.palette.primary.main,
-  },
+  border: `1px solid ${selected ? theme.palette.primary.main : "#ccc"}`,
+  backgroundColor: selected ? "rgba(25, 118, 210, 0.04)" : "white",
 }));
 
 const BookingSummaryCard = styled(Card)(({ theme }) => ({
-  background: "linear-gradient(45deg, #1a237e 30%, #283593 90%)",
+  background: "#1e3c72",
   color: "white",
-  marginBottom: theme.spacing(2),
+  height: "100%",
+  borderRadius: theme.spacing(1),
 }));
+
+const StyledListItem = styled(ListItem)(({ theme }) => ({
+  padding: theme.spacing(1, 0),
+}));
+
+const steps = ["Booking Summary", "Payment Method", "Confirmation"];
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const booking = location.state?.booking;
+  const [activeStep, setActiveStep] = useState(0);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
+  const [showSuccess, setShowSuccess] = useState(false);
 
   if (!isUserLoggedIn || !booking) {
     navigate("/auth");
@@ -57,10 +67,14 @@ const PaymentPage = () => {
   }
 
   const handlePayment = (method) => {
-    // Here you would integrate with actual payment gateways
-    console.log(`Processing payment with ${method}`);
-    // For demo purposes, just show a success message
-    alert(`Payment with ${method} would be processed here`);
+    setSelectedPaymentMethod(method);
+    if (method === "Pay on Arrival") {
+      setActiveStep(2);
+      setShowSuccess(true);
+      setTimeout(() => {
+        navigate("/user");
+      }, 3000);
+    }
   };
 
   const calculateTotalPrice = (booking) => {
@@ -68,7 +82,6 @@ const PaymentPage = () => {
     const premiumSeatPrice = 750;
     const premiumSeats = [1, 2, 3, 4, 5, 26, 27, 28, 29, 30];
 
-    // Handle both old and new seat data structure
     const seats = Array.isArray(booking.seats)
       ? booking.seats
       : [booking.seatNumber];
@@ -83,250 +96,223 @@ const PaymentPage = () => {
   };
 
   return (
-    <Container maxWidth="md" sx={{ py: 2 }}>
-      <Paper elevation={2} sx={{ p: 3, borderRadius: 2 }}>
-        <Typography
-          variant="h5"
-          gutterBottom
-          sx={{ color: "#1a237e", fontWeight: 600, mb: 2 }}
-        >
-          Payment Details
-        </Typography>
+    <Box sx={{ p: 2 }}>
+      <Container maxWidth="md">
+        <Paper sx={{ p: 2 }}>
+          <Stepper activeStep={activeStep} alternativeLabel>
+            {steps.map((label) => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
 
-        {/* Booking Summary */}
-        <BookingSummaryCard>
-          <CardContent sx={{ p: 2 }}>
-            <Typography
-              variant="h6"
-              gutterBottom
-              sx={{ fontWeight: 600, mb: 2 }}
-            >
-              Booking Summary
-            </Typography>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
-                <List dense>
-                  <ListItem>
-                    <ListItemIcon>
-                      <MovieIcon sx={{ color: "white", fontSize: 20 }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Movie"
-                      secondary={booking.movie.title}
-                      primaryTypographyProps={{
-                        color: "white",
-                        fontSize: "0.9rem",
-                      }}
-                      secondaryTypographyProps={{
-                        color: "rgba(255,255,255,0.8)",
-                        fontSize: "0.8rem",
-                      }}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <CalendarTodayIcon
-                        sx={{ color: "white", fontSize: 20 }}
-                      />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Date"
-                      secondary={new Date(booking.date).toLocaleDateString()}
-                      primaryTypographyProps={{
-                        color: "white",
-                        fontSize: "0.9rem",
-                      }}
-                      secondaryTypographyProps={{
-                        color: "rgba(255,255,255,0.8)",
-                        fontSize: "0.8rem",
-                      }}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <EventSeatIcon sx={{ color: "white", fontSize: 20 }} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="Seats"
-                      secondary={
-                        Array.isArray(booking.seats)
-                          ? booking.seats
-                              .map((seat) =>
-                                typeof seat === "object" ? seat.number : seat
-                              )
-                              .join(", ")
-                          : booking.seatNumber
-                      }
-                      primaryTypographyProps={{
-                        color: "white",
-                        fontSize: "0.9rem",
-                      }}
-                      secondaryTypographyProps={{
-                        color: "rgba(255,255,255,0.8)",
-                        fontSize: "0.8rem",
-                      }}
-                    />
-                  </ListItem>
-                </List>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    height: "100%",
-                  }}
-                >
-                  <Typography
-                    variant="h6"
-                    sx={{ color: "white", fontWeight: 600, mb: 1 }}
+          {showSuccess && (
+            <Fade in={showSuccess}>
+              <Alert severity="success" sx={{ mt: 2 }}>
+                <Typography variant="h6">Booking Successful!</Typography>
+                <Typography>
+                  Your booking has been confirmed. You will be redirected
+                  shortly.
+                </Typography>
+              </Alert>
+            </Fade>
+          )}
+
+          {!showSuccess && (
+            <>
+              <Typography variant="h5" align="center" sx={{ mt: 2, mb: 3 }}>
+                Complete Your Payment
+              </Typography>
+
+              <Grid container spacing={2}>
+                <Grid item xs={12} md={7}>
+                  <BookingSummaryCard>
+                    <CardContent sx={{ p: 1 }}>
+                      <Typography
+                        variant="subtitle2"
+                        gutterBottom
+                        sx={{ mb: 1 }}
+                      >
+                        Booking Summary
+                      </Typography>
+                      <List dense sx={{ py: 0 }}>
+                        <StyledListItem>
+                          <ListItemIcon sx={{ minWidth: 30 }}>
+                            <CreditCardIcon
+                              sx={{ color: "white", fontSize: 16 }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Booking ID"
+                            secondary={booking._id}
+                            primaryTypographyProps={{
+                              color: "white",
+                              fontSize: "0.75rem",
+                            }}
+                            secondaryTypographyProps={{
+                              color: "rgba(255,255,255,0.7)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
+                        </StyledListItem>
+                        <StyledListItem>
+                          <ListItemIcon sx={{ minWidth: 30 }}>
+                            <MovieIcon sx={{ color: "white", fontSize: 16 }} />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Movie"
+                            secondary={booking.movie.title}
+                            primaryTypographyProps={{
+                              color: "white",
+                              fontSize: "0.75rem",
+                            }}
+                            secondaryTypographyProps={{
+                              color: "rgba(255,255,255,0.7)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
+                        </StyledListItem>
+                        <StyledListItem>
+                          <ListItemIcon sx={{ minWidth: 30 }}>
+                            <CalendarTodayIcon
+                              sx={{ color: "white", fontSize: 16 }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Date & Time"
+                            secondary={new Date(booking.date).toLocaleString()}
+                            primaryTypographyProps={{
+                              color: "white",
+                              fontSize: "0.75rem",
+                            }}
+                            secondaryTypographyProps={{
+                              color: "rgba(255,255,255,0.7)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
+                        </StyledListItem>
+                        <StyledListItem>
+                          <ListItemIcon sx={{ minWidth: 30 }}>
+                            <EventSeatIcon
+                              sx={{ color: "white", fontSize: 16 }}
+                            />
+                          </ListItemIcon>
+                          <ListItemText
+                            primary="Seats"
+                            secondary={
+                              Array.isArray(booking.seats)
+                                ? booking.seats
+                                    .map((seat) =>
+                                      typeof seat === "object"
+                                        ? seat.number
+                                        : seat
+                                    )
+                                    .join(", ")
+                                : booking.seatNumber
+                            }
+                            primaryTypographyProps={{
+                              color: "white",
+                              fontSize: "0.75rem",
+                            }}
+                            secondaryTypographyProps={{
+                              color: "rgba(255,255,255,0.7)",
+                              fontSize: "0.7rem",
+                            }}
+                          />
+                        </StyledListItem>
+                      </List>
+                      <Box
+                        sx={{ mt: 1, p: 0.5, bgcolor: "rgba(255,255,255,0.1)" }}
+                      >
+                        <Typography
+                          variant="subtitle2"
+                          align="center"
+                          sx={{ fontSize: "0.75rem" }}
+                        >
+                          Total Amount
+                        </Typography>
+                        <Typography
+                          variant="h6"
+                          align="center"
+                          sx={{ color: "#ffd700", fontSize: "1rem" }}
+                        >
+                          Rs. {calculateTotalPrice(booking).toFixed(2)}
+                        </Typography>
+                      </Box>
+                    </CardContent>
+                  </BookingSummaryCard>
+                </Grid>
+
+                <Grid item xs={12} md={5}>
+                  <Box
+                    sx={{ display: "flex", flexDirection: "column", gap: 1 }}
                   >
-                    Total Amount
-                  </Typography>
-                  <Typography
-                    variant="h4"
-                    sx={{ color: "#ffd700", fontWeight: 700 }}
-                  >
-                    Rs. {calculateTotalPrice(booking).toFixed(2)}
-                  </Typography>
-                </Box>
+                    <Box>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Select Payment Method
+                      </Typography>
+                      <PaymentOption
+                        onClick={() => handlePayment("Pay on Arrival")}
+                        selected={selectedPaymentMethod === "Pay on Arrival"}
+                      >
+                        <LocalAtmIcon
+                          sx={{ fontSize: 20, color: "#1e3c72", mb: 0.5 }}
+                        />
+                        <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                          Pay on Arrival
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ mb: 0.5 }}
+                        >
+                          Pay at the theater counter
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          size="small"
+                          sx={{
+                            bgcolor: "#1e3c72",
+                            py: 0.25,
+                            px: 1,
+                            fontSize: "0.7rem",
+                            minHeight: "24px",
+                          }}
+                        >
+                          Select & Continue
+                        </Button>
+                      </PaymentOption>
+                    </Box>
+
+                    <Box sx={{ p: 1, bgcolor: "#f5f5f5", borderRadius: 1 }}>
+                      <Typography variant="subtitle2" gutterBottom>
+                        Important Instructions
+                      </Typography>
+                      <List dense sx={{ py: 0 }}>
+                        {[
+                          "Present booking confirmation at counter",
+                          "Pay at counter to receive tickets",
+                          "Arrive 30 minutes before show",
+                        ].map((text, index) => (
+                          <ListItem key={index} sx={{ py: 0.25 }}>
+                            <ListItemText
+                              primary={`${index + 1}. ${text}`}
+                              primaryTypographyProps={{ fontSize: "0.75rem" }}
+                            />
+                          </ListItem>
+                        ))}
+                      </List>
+                    </Box>
+                  </Box>
+                </Grid>
               </Grid>
-            </Grid>
-          </CardContent>
-        </BookingSummaryCard>
-
-        {/* Payment Options */}
-        <Typography
-          variant="h6"
-          gutterBottom
-          sx={{ color: "#1a237e", fontWeight: 600, mb: 2 }}
-        >
-          Select Payment Method
-        </Typography>
-        <Grid container spacing={2}>
-          {/* Bank Transfer */}
-          <Grid item xs={12} md={3}>
-            <PaymentOption onClick={() => handlePayment("Bank Transfer")}>
-              <AccountBalanceIcon
-                sx={{ fontSize: 32, color: "#1a237e", mb: 1 }}
-              />
-              <Typography variant="subtitle1" gutterBottom>
-                Bank Transfer
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{ fontSize: "0.75rem" }}
-              >
-                Pay directly from your bank account
-              </Typography>
-            </PaymentOption>
-          </Grid>
-
-          {/* Credit Card */}
-          <Grid item xs={12} md={3}>
-            <PaymentOption onClick={() => handlePayment("Credit Card")}>
-              <CreditCardIcon sx={{ fontSize: 32, color: "#1a237e", mb: 1 }} />
-              <Typography variant="subtitle1" gutterBottom>
-                Credit Card
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{ fontSize: "0.75rem" }}
-              >
-                Pay with your credit or debit card
-              </Typography>
-            </PaymentOption>
-          </Grid>
-
-          {/* Mobile Payment */}
-          <Grid item xs={12} md={3}>
-            <PaymentOption onClick={() => handlePayment("Mobile Payment")}>
-              <PhoneIphoneIcon sx={{ fontSize: 32, color: "#1a237e", mb: 1 }} />
-              <Typography variant="subtitle1" gutterBottom>
-                Mobile Payment
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{ fontSize: "0.75rem" }}
-              >
-                Pay with eSewa, Khalti, or IME Pay
-              </Typography>
-            </PaymentOption>
-          </Grid>
-
-          {/* Pay on Arrival */}
-          <Grid item xs={12} md={3}>
-            <PaymentOption onClick={() => handlePayment("Pay on Arrival")}>
-              <LocalAtmIcon sx={{ fontSize: 32, color: "#1a237e", mb: 1 }} />
-              <Typography variant="subtitle1" gutterBottom>
-                Pay on Arrival
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                align="center"
-                sx={{ fontSize: "0.75rem" }}
-              >
-                Pay at the theater counter
-              </Typography>
-            </PaymentOption>
-          </Grid>
-        </Grid>
-
-        {/* Payment Instructions */}
-        <Box
-          sx={{
-            mt: 3,
-            p: 2,
-            bgcolor: "#f5f5f5",
-            borderRadius: 1,
-            border: "1px solid #e0e0e0",
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            gutterBottom
-            sx={{ color: "#1a237e", fontWeight: 600 }}
-          >
-            Payment Instructions
-          </Typography>
-          <List dense>
-            <ListItem>
-              <ListItemText
-                primary="Online Payment"
-                secondary="Select your preferred payment method and follow the secure payment process. You will receive a confirmation email after successful payment."
-                primaryTypographyProps={{ fontSize: "0.9rem" }}
-                secondaryTypographyProps={{ fontSize: "0.8rem" }}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Pay on Arrival"
-                secondary="Please arrive at least 30 minutes before the show time. Present your booking confirmation at the counter to complete the payment."
-                primaryTypographyProps={{ fontSize: "0.9rem" }}
-                secondaryTypographyProps={{ fontSize: "0.8rem" }}
-              />
-            </ListItem>
-            <ListItem>
-              <ListItemText
-                primary="Important Notes"
-                secondary="• Keep your booking confirmation handy\n• For premium seats, please arrive early\n• Payment must be completed before the show starts"
-                primaryTypographyProps={{ fontSize: "0.9rem" }}
-                secondaryTypographyProps={{ fontSize: "0.8rem" }}
-              />
-            </ListItem>
-          </List>
-        </Box>
-      </Paper>
-    </Container>
+            </>
+          )}
+        </Paper>
+      </Container>
+    </Box>
   );
 };
 

@@ -2,35 +2,70 @@ import { Box } from "@mui/system";
 import React, { useEffect, useState } from "react";
 import PersonRoundedIcon from "@mui/icons-material/PersonRounded";
 import { DeleteForeverOutlined } from "@mui/icons-material/";
-
 import {
   IconButton,
   List,
   ListItem,
   ListItemText,
   Typography,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { deleteBooking, getUserBookings } from "../../helpers/api-helpers";
 import { useNavigate } from "react-router-dom";
+
 const User = () => {
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
   const onResReceived = (res) => {
     setBookings(res.bookings);
   };
+
   useEffect(() => {
     getUserBookings()
       .then(onResReceived)
       .catch((err) => console.log(err));
   }, []);
-  console.log(bookings);
+
   const handleDelete = (id) => {
     deleteBooking(id)
-      .then(() => navigate("/"))
-      .catch((err) => console.log(err));
+      .then(() => {
+        setBookings(bookings.filter((booking) => booking._id !== id));
+        setSnackbarMessage("Booking deleted successfully!");
+        setSnackbarSeverity("success");
+        setOpenSnackbar(true);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+        setSnackbarMessage("Failed to delete booking");
+        setSnackbarSeverity("error");
+        setOpenSnackbar(true);
+      });
   };
+
+  const handleCloseSnackbar = () => {
+    setOpenSnackbar(false);
+  };
+
   return (
     <Box width="100%" display={"flex"}>
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={2000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert onClose={handleCloseSnackbar} severity={snackbarSeverity}>
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
       <Box
         display="flex"
         flexDirection={"column"}
