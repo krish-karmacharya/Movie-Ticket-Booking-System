@@ -5,7 +5,6 @@ import {
   Typography,
   Button,
   Box,
-  Rating,
   CardActions,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -92,7 +91,7 @@ const MovieItem = ({ id, title, posterUrl, releaseDate, description }) => {
         </Box>
       </Box>
 
-      <CardContent sx={{ flexGrow: 1, p: 2 }}>
+      <CardContent>
         <Typography
           gutterBottom
           variant="h6"
@@ -112,18 +111,6 @@ const MovieItem = ({ id, title, posterUrl, releaseDate, description }) => {
         >
           {title}
         </Typography>
-        <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
-          <Rating
-            value={4.5}
-            precision={0.5}
-            readOnly
-            size="small"
-            sx={{ color: "#1a237e" }}
-          />
-          <Typography variant="body2" color="text.secondary" sx={{ ml: 1 }}>
-            (4.5)
-          </Typography>
-        </Box>
         <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
           <CalendarTodayIcon
             sx={{ fontSize: 16, mr: 0.5, color: "text.secondary" }}
@@ -149,7 +136,8 @@ const MovieItem = ({ id, title, posterUrl, releaseDate, description }) => {
           {description}
         </Typography>
       </CardContent>
-      <CardActions sx={{ p: 2, pt: 0 }}>
+
+      <CardActions>
         <Button
           onClick={handleBooking}
           variant="contained"

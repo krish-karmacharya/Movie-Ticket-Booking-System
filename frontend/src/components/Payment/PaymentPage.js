@@ -11,9 +11,6 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
-  Stepper,
-  Step,
-  StepLabel,
   Button,
   Alert,
   Fade,
@@ -33,7 +30,7 @@ const PaymentOption = styled(Card)(({ theme, selected }) => ({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  padding: theme.spacing(2),
+  padding: theme.spacing(1),
   cursor: "pointer",
   border: `1px solid ${selected ? theme.palette.primary.main : "#ccc"}`,
   backgroundColor: selected ? "rgba(25, 118, 210, 0.04)" : "white",
@@ -47,17 +44,14 @@ const BookingSummaryCard = styled(Card)(({ theme }) => ({
 }));
 
 const StyledListItem = styled(ListItem)(({ theme }) => ({
-  padding: theme.spacing(1, 0),
+  padding: theme.spacing(0.5, 0),
 }));
-
-const steps = ["Booking Summary", "Payment Method", "Confirmation"];
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const booking = location.state?.booking;
-  const [activeStep, setActiveStep] = useState(0);
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
 
@@ -69,7 +63,6 @@ const PaymentPage = () => {
   const handlePayment = (method) => {
     setSelectedPaymentMethod(method);
     if (method === "Pay on Arrival") {
-      setActiveStep(2);
       setShowSuccess(true);
       setTimeout(() => {
         navigate("/user");
@@ -99,19 +92,11 @@ const PaymentPage = () => {
     <Box sx={{ p: 2 }}>
       <Container maxWidth="md">
         <Paper sx={{ p: 2 }}>
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-
           {showSuccess && (
             <Fade in={showSuccess}>
-              <Alert severity="success" sx={{ mt: 2 }}>
-                <Typography variant="h6">Booking Successful!</Typography>
-                <Typography>
+              <Alert severity="success" sx={{ mb: 2 }}>
+                <Typography variant="subtitle2">Booking Successful!</Typography>
+                <Typography variant="body2">
                   Your booking has been confirmed. You will be redirected
                   shortly.
                 </Typography>
@@ -121,7 +106,7 @@ const PaymentPage = () => {
 
           {!showSuccess && (
             <>
-              <Typography variant="h5" align="center" sx={{ mt: 2, mb: 3 }}>
+              <Typography variant="h6" align="center" sx={{ mb: 2 }}>
                 Complete Your Payment
               </Typography>
 
