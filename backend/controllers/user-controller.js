@@ -3,7 +3,7 @@ import bcrypt from "bcryptjs";
 import Bookings from "../models/Bookings.js";
 import mongoose from "mongoose";
 
-export const getAllUsers = async (req, res, next) => {
+export const getAllUsers = async (res) => {
   try {
     const users = await User.find().lean();
     return res.status(200).json({ users });
@@ -14,7 +14,7 @@ export const getAllUsers = async (req, res, next) => {
   }
 };
 
-export const signup = async (req, res, next) => {
+export const signup = async (req, res) => {
   const { name, email, password } = req.body;
 
   // Validate required fields
@@ -119,9 +119,13 @@ export const login = async (req, res, next) => {
   }
 
   try {
+    // Only select necessary fields to improve performance
     const existingUser = await User.findOne({
       email: email.toLowerCase(),
-    }).lean();
+    })
+      .select("_id name email password")
+      .lean();
+
     if (!existingUser) {
       return res
         .status(404)
@@ -136,13 +140,15 @@ export const login = async (req, res, next) => {
       return res.status(400).json({ message: "Incorrect Password" });
     }
 
+    // Remove password from response
+    delete existingUser.password;
+
     return res.status(200).json({
       message: "Login Successful",
-      id: existingUser._id,
-      name: existingUser.name,
-      email: existingUser.email,
+      ...existingUser,
     });
   } catch (err) {
+    console.error("Login error:", err);
     return res
       .status(500)
       .json({ message: "Login Failed", error: err.message });
@@ -185,7 +191,7 @@ export const getBookingsOfUser = async (req, res, next) => {
   }
 };
 
-export const getUserById = async (req, res, next) => {
+export const getUserById = async (req, res) => {
   const id = req.params.id;
 
   if (!mongoose.Types.ObjectId.isValid(id)) {

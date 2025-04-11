@@ -11,11 +11,12 @@ const Auth = () => {
   const dispatch = useDispatch();
   const [error, setError] = useState("");
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const onResReceived = (data) => {
-    console.log(data);
     dispatch(userActions.login());
     localStorage.setItem("userId", data.id);
+    setLoading(false);
     navigate("/");
   };
 
@@ -26,11 +27,11 @@ const Auth = () => {
 
   const getData = async (data) => {
     try {
-      console.log(data);
+      setLoading(true);
       const response = await sendUserAuthRequest(data.inputs, data.signup);
       onResReceived(response);
     } catch (err) {
-      console.error(err);
+      setLoading(false);
       setError(
         err.response?.data?.message || "Failed to sign up. Please try again."
       );
@@ -40,7 +41,7 @@ const Auth = () => {
 
   return (
     <div>
-      <AuthForm onSubmit={getData} isAdmin={false} />
+      <AuthForm onSubmit={getData} isAdmin={false} loading={loading} />
       <Snackbar
         open={open}
         autoHideDuration={6000}

@@ -2,13 +2,13 @@ import {
   Box,
   Button,
   Dialog,
-  FormLabel,
   IconButton,
   TextField,
   Typography,
   Paper,
   InputAdornment,
   Divider,
+  CircularProgress,
 } from "@mui/material";
 import React, { useState } from "react";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -19,7 +19,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import PersonIcon from "@mui/icons-material/Person";
 import LockIcon from "@mui/icons-material/Lock";
 
-const AuthForm = ({ onSubmit, isAdmin }) => {
+const AuthForm = ({ onSubmit, isAdmin, loading }) => {
   const [inputs, setInputs] = useState({
     name: "",
     email: "",
@@ -37,7 +37,9 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ inputs, signup: isAdmin ? false : isSignup });
+    if (!loading) {
+      onSubmit({ inputs, signup: isAdmin ? false : isSignup });
+    }
   };
 
   return (
@@ -106,6 +108,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
                 margin="normal"
                 variant="outlined"
                 required
+                disabled={loading}
                 InputProps={{
                   startAdornment: (
                     <InputAdornment position="start">
@@ -125,6 +128,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
               variant="outlined"
               type="email"
               required
+              disabled={loading}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -143,6 +147,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
               variant="outlined"
               type={showPassword ? "text" : "password"}
               required
+              disabled={loading}
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -179,9 +184,16 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
                   transform: "scale(1.02)",
                 },
                 transition: "all 0.3s ease",
+                disabled: loading,
               }}
             >
-              {isSignup ? "Sign Up" : "Sign In"}
+              {loading ? (
+                <CircularProgress size={24} color="inherit" />
+              ) : isSignup ? (
+                "Sign Up"
+              ) : (
+                "Sign In"
+              )}
             </Button>
 
             {!isAdmin && (
@@ -198,6 +210,7 @@ const AuthForm = ({ onSubmit, isAdmin }) => {
                       borderColor: "#000051",
                       bgcolor: "rgba(26, 35, 126, 0.04)",
                     },
+                    disabled: loading,
                   }}
                 >
                   {isSignup
