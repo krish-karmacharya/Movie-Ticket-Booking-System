@@ -83,15 +83,21 @@ export const newBooking = async (data) => {
 
 export const getUserBooking = async () => {
   const id = localStorage.getItem("userId");
-  const res = await axios
-    .get(`/user/bookings/${id}`)
-    .catch((err) => console.log(err));
-
-  if (res.status !== 200) {
-    return console.log("Unexpected Error");
+  if (!id) return null;
+  try {
+    const res = await axios.get(`/user/bookings/${id}`);
+    if (res.status !== 200) return null;
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    if (
+      err.response?.status === 400 &&
+      err.response?.data?.message === "Invalid User ID format"
+    ) {
+      localStorage.removeItem("userId");
+    }
+    return null;
   }
-  const resData = await res.data;
-  return resData;
 };
 
 export const deleteBooking = async (id) => {
@@ -109,12 +115,21 @@ export const deleteBooking = async (id) => {
 
 export const getUserDetails = async () => {
   const id = localStorage.getItem("userId");
-  const res = await axios.get(`/user/${id}`).catch((err) => console.log(err));
-  if (res.status !== 200) {
-    return console.log("Unexpected Error");
+  if (!id) return null;
+  try {
+    const res = await axios.get(`/user/${id}`);
+    if (res.status !== 200) return null;
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    if (
+      err.response?.status === 400 &&
+      err.response?.data?.message === "Invalid User ID format"
+    ) {
+      localStorage.removeItem("userId");
+    }
+    return null;
   }
-  const resData = await res.data;
-  return resData;
 };
 
 export const addMovie = async (data) => {

@@ -8,18 +8,13 @@ import {
   Button,
   Box,
   useTheme,
-  Menu,
-  MenuItem,
-  Avatar,
   Snackbar,
   Alert,
-  Badge,
-  Tooltip,
   Fade,
   useMediaQuery,
   Drawer,
   List,
-  ListItem,
+  ListItemButton,
   ListItemIcon,
   ListItemText,
   Divider,
@@ -58,13 +53,6 @@ const StyledButton = styled(Button)(({ theme }) => ({
   },
 }));
 
-const StyledAvatar = styled(Avatar)(({ theme }) => ({
-  backgroundColor: "#8B4513",
-  "&:hover": {
-    backgroundColor: "#654321",
-  },
-}));
-
 const Header = () => {
   const theme = useTheme();
   const navigate = useNavigate();
@@ -73,10 +61,8 @@ const Header = () => {
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const [value, setValue] = useState();
   const [movies, setMovies] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
-  const [scrolled, setScrolled] = useState(false);
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -94,21 +80,9 @@ const Header = () => {
         setError("Failed to fetch movies");
         setOpen(true);
       });
-
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
   const handleClose = () => {
-    setAnchorEl(null);
     setOpen(false);
   };
 
@@ -141,8 +115,7 @@ const Header = () => {
       <List>
         {isAdminLoggedIn ? (
           <>
-            <ListItem
-              button
+            <ListItemButton
               component={Link}
               to="/addMovies"
               onClick={handleDrawerToggle}
@@ -151,9 +124,8 @@ const Header = () => {
                 <AddIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Add Movie" />
-            </ListItem>
-            <ListItem
-              button
+            </ListItemButton>
+            <ListItemButton
               component={Link}
               to="/admin/bookings"
               onClick={handleDrawerToggle}
@@ -162,9 +134,8 @@ const Header = () => {
                 <ConfirmationNumberIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="View Bookings" />
-            </ListItem>
-            <ListItem
-              button
+            </ListItemButton>
+            <ListItemButton
               component={Link}
               to="/profile"
               onClick={handleDrawerToggle}
@@ -173,10 +144,9 @@ const Header = () => {
                 <PersonIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Profile" />
-            </ListItem>
+            </ListItemButton>
             <Divider />
-            <ListItem
-              button
+            <ListItemButton
               onClick={() => {
                 dispatch(adminActions.logout());
                 handleDrawerToggle();
@@ -186,24 +156,27 @@ const Header = () => {
                 <LogoutIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Logout" />
-            </ListItem>
+            </ListItemButton>
           </>
         ) : isUserLoggedIn ? (
           <>
-            <ListItem
-              button
+            <ListItemButton
+
+
+
+
+
               component={Link}
-              to="/user"
+              to="/profile"
               onClick={handleDrawerToggle}
             >
               <ListItemIcon>
                 <PersonIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Profile" />
-            </ListItem>
+            </ListItemButton>
             <Divider />
-            <ListItem
-              button
+            <ListItemButton
               onClick={() => {
                 logout(isAdminLoggedIn);
                 handleDrawerToggle();
@@ -213,12 +186,11 @@ const Header = () => {
                 <LogoutIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Logout" />
-            </ListItem>
+            </ListItemButton>
           </>
         ) : (
           <>
-            <ListItem
-              button
+            <ListItemButton
               component={Link}
               to="/auth"
               onClick={handleDrawerToggle}
@@ -227,9 +199,8 @@ const Header = () => {
                 <PersonIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Login" />
-            </ListItem>
-            <ListItem
-              button
+            </ListItemButton>
+            <ListItemButton
               component={Link}
               to="/admin"
               onClick={handleDrawerToggle}
@@ -238,7 +209,7 @@ const Header = () => {
                 <PersonIcon sx={{ color: "#6C757D" }} />
               </ListItemIcon>
               <ListItemText primary="Admin" />
-            </ListItem>
+            </ListItemButton>
           </>
         )}
       </List>
@@ -354,7 +325,7 @@ const Header = () => {
               <>
                 <StyledButton
                   component={Link}
-                  to="/user"
+                  to="/profile"
                   startIcon={<PersonIcon />}
                 >
                   Profile

@@ -22,7 +22,7 @@ const AdminBookings = () => {
     const fetchBookings = async () => {
       try {
         const response = await getAllBookings();
-        setBookings(response.bookings);
+        setBookings(response?.bookings ?? []);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -79,13 +79,17 @@ const AdminBookings = () => {
           <TableBody>
             {bookings.map((booking) => (
               <TableRow key={booking._id}>
-                <TableCell>{booking.movie.title}</TableCell>
-                <TableCell>{booking.user.name}</TableCell>
+                <TableCell>{booking.movie?.title ?? "—"}</TableCell>
+                <TableCell>{booking.user?.name ?? "—"}</TableCell>
                 <TableCell>
-                  {new Date(booking.date).toLocaleDateString()}
+                  {booking.date
+                    ? new Date(booking.date).toLocaleDateString()
+                    : "—"}
                 </TableCell>
                 <TableCell>
-                  {booking.seats.map((seat) => seat.number).join(", ")}
+                  {booking.seats?.length
+                    ? booking.seats.map((seat) => seat.number).join(", ")
+                    : booking.seatNumber ?? "—"}
                 </TableCell>
                 <TableCell>₹{booking.totalPrice}</TableCell>
                 <TableCell>

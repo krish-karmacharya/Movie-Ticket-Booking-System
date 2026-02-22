@@ -12,7 +12,7 @@ const adminRouter = express.Router();
 adminRouter.post("/signup", addAdmin);
 adminRouter.post("/login", adminLogin);
 adminRouter.get("/", getAdmins);
-adminRouter.get("/:id", getAdminById);
 adminRouter.get("/bookings/all", getAllBookings);
+adminRouter.get("/:id", getAdminById);
 
 export default adminRouter;

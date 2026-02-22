@@ -8,12 +8,11 @@ import {
   CardContent,
   IconButton,
   Chip,
-  Divider,
   Avatar,
   Snackbar,
   Alert,
 } from "@mui/material";
-import React, { Fragment, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   deleteBooking,
   getUserBooking,
@@ -72,8 +71,23 @@ const UserProfile = () => {
   const [severity, setSeverity] = useState("success");
 
   useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    if (!userId) {
+      navigate("/auth", { replace: true });
+      return;
+    }
+
     getUserBooking()
-      .then((res) => setBookings(res.bookings))
+      .then((res) => {
+        if (!res || !res.bookings) {
+          setMessage("Failed to fetch bookings");
+          setSeverity("error");
+          setOpen(true);
+          setBookings([]);
+          return;
+        }
+        setBookings(res.bookings);
+      })
       .catch((err) => {
         console.log(err);
         setMessage("Failed to fetch bookings");
@@ -82,14 +96,23 @@ const UserProfile = () => {
       });
 
     getUserDetails()
-      .then((res) => setUser(res.user))
+      .then((res) => {
+        if (!res || !res.user) {
+          setMessage("Failed to fetch user details");
+          setSeverity("error");
+          setOpen(true);
+          setUser(null);
+          return;
+        }
+        setUser(res.user);
+      })
       .catch((err) => {
         console.log(err);
         setMessage("Failed to fetch user details");
         setSeverity("error");
         setOpen(true);
       });
-  }, []);
+  }, [navigate]);
 
   const handleDelete = (id) => {
     deleteBooking(id)

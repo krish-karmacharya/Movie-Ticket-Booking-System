@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation, Navigate } from "react-router-dom";
 import Admin from "./components/Auth/Admin";
 import Auth from "./components/Auth/Auth";
 import Booking from "./components/Bookings/Booking";
@@ -24,8 +24,6 @@ const AppContent = () => {
   const dispatch = useDispatch();
   const isAdminLoggedIn = useSelector((state) => state.admin.isLoggedIn);
   const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
-  console.log("isAdminLoggedIn", isAdminLoggedIn);
-  console.log("isUserLoggedIn", isUserLoggedIn);
   useEffect(() => {
     if (localStorage.getItem("userId")) {
       dispatch(userActions.login());
@@ -56,22 +54,21 @@ const AppContent = () => {
           <Route path="/movies" element={<Movies />} />
           {!isUserLoggedIn && !isAdminLoggedIn && (
             <>
-              {" "}
               <Route path="/admin" element={<Admin />} />
               <Route path="/auth" element={<Auth />} />
+              <Route path="/profile" element={<Navigate to="/auth" replace />} />
             </>
           )}
           {isUserLoggedIn && !isAdminLoggedIn && (
             <>
-              {" "}
               <Route path="/user" element={<UserProfile />} />
+              <Route path="/profile" element={<UserProfile />} />
               <Route path="/booking/:id" element={<Booking />} />
               <Route path="/payment" element={<PaymentPage />} />
             </>
           )}
           {isAdminLoggedIn && !isUserLoggedIn && (
             <>
-              {" "}
               <Route path="/addMovies" element={<AddMovie />} />
               <Route path="/profile" element={<AdminProfile />} />
               <Route path="/admin/bookings" element={<AdminBookings />} />

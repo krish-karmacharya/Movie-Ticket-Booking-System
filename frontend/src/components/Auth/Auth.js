@@ -15,7 +15,8 @@ const Auth = () => {
 
   const onResReceived = (data) => {
     dispatch(userActions.login());
-    localStorage.setItem("userId", data.id);
+    const userId = data.id ?? data._id;
+    if (userId) localStorage.setItem("userId", userId);
     setLoading(false);
     navigate("/");
   };
