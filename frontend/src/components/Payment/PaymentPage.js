@@ -76,8 +76,8 @@ const PaymentPage = () => {
     }
   };
 
-  const handlePayWithKhalti = async () => {
-    if (selectedPaymentMethod !== "Khalti") return;
+  const handlePayWithKhalti = async (e) => {
+    e?.stopPropagation?.();
     setKhaltiLoading(true);
     setKhaltiError("");
     try {
@@ -336,10 +336,7 @@ const PaymentPage = () => {
                           fullWidth
                           size="small"
                           disabled={khaltiLoading}
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handlePayWithKhalti();
-                          }}
+                          onClick={handlePayWithKhalti}
                           sx={{
                             bgcolor: "#773292",
                             py: 0.25,
