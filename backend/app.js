@@ -1,19 +1,12 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-
-
-
-
-
-
-
-
 import dns from "node:dns/promises";
 import userRouter from "./routes/user-routes.js";
 import adminRouter from "./routes/admin-routes.js";
 import movieRouter from "./routes/movie-routes.js";
 import bookingsRouter from "./routes/booking-routes.js";
+import paymentRouter from "./routes/payment-routes.js";
 import cors from "cors";
 
 // Fix for Node.js v24 on Windows: force DNS servers so MongoDB SRV lookup works
@@ -28,6 +21,7 @@ app.use("/user", userRouter);
 app.use("/admin", adminRouter);
 app.use("/movie", movieRouter);
 app.use("/booking", bookingsRouter);
+app.use("/payment", paymentRouter);
 
 mongoose
   .connect( `mongodb+srv://kreeshk123:${process.env.MONGODB_PASSWORD}@movietrial1.b5v6y.mongodb.net/?retryWrites=true&w=majority&appName=movietrial1`)

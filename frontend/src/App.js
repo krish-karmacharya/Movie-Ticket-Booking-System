@@ -13,12 +13,13 @@ import AdminProfile from "./profile/AdminProfile";
 import UserProfile from "./profile/UserProfile";
 import { adminActions, userActions } from "./store";
 import PaymentPage from "./components/Payment/PaymentPage";
+import PaymentReturn from "./components/Payment/PaymentReturn";
 import AdminBookings from "./components/Auth/AdminBookings";
 import { Box } from "@mui/material";
 
 const AppContent = () => {
   const location = useLocation();
-  const hideFooterPaths = ["/user", "/profile", "/payment", "/auth", "/admin"];
+  const hideFooterPaths = ["/user", "/profile", "/payment", "/payment/return", "/auth", "/admin"];
   const shouldShowFooter = !hideFooterPaths.includes(location.pathname);
 
   const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const AppContent = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<Movies />} />
           <Route path="/booking/:id" element={<Booking />} />
+          <Route path="/payment/return" element={<PaymentReturn />} />
           {!isUserLoggedIn && !isAdminLoggedIn && (
             <>
               <Route path="/admin" element={<Admin />} />

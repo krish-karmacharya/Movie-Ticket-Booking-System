@@ -14,6 +14,7 @@ import {
   Button,
   Alert,
   Fade,
+  CircularProgress,
 } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
@@ -22,7 +23,9 @@ import MovieIcon from "@mui/icons-material/Movie";
 import EventSeatIcon from "@mui/icons-material/EventSeat";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
 import LocalAtmIcon from "@mui/icons-material/LocalAtm";
+import AccountBalanceWalletIcon from "@mui/icons-material/AccountBalanceWallet";
 import { useSelector } from "react-redux";
+import { initiateKhaltiPayment } from "../../api-helpers/api-helpers";
 
 const PaymentOption = styled(Card)(({ theme, selected }) => ({
   width: "100%",
@@ -54,6 +57,8 @@ const PaymentPage = () => {
   const booking = location.state?.booking;
   const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [khaltiLoading, setKhaltiLoading] = useState(false);
+  const [khaltiError, setKhaltiError] = useState("");
 
   if (!isUserLoggedIn || !booking) {
     navigate("/auth");
@@ -62,11 +67,44 @@ const PaymentPage = () => {
 
   const handlePayment = (method) => {
     setSelectedPaymentMethod(method);
+    setKhaltiError("");
     if (method === "Pay on Arrival") {
       setShowSuccess(true);
       setTimeout(() => {
         navigate("/user");
       }, 3000);
+    }
+  };
+
+  const handlePayWithKhalti = async () => {
+    if (selectedPaymentMethod !== "Khalti") return;
+    setKhaltiLoading(true);
+    setKhaltiError("");
+    try {
+      const totalAmount = calculateTotalPrice(booking);
+      const baseUrl = window.location.origin;
+      const data = await initiateKhaltiPayment({
+        amount: totalAmount,
+        purchase_order_id: booking._id,
+        purchase_order_name: booking.movie?.title || "Movie Ticket Booking",
+        return_url: `${baseUrl}/payment/return`,
+        website_url: `${baseUrl}/`,
+        customer_info: booking.user
+          ? {
+              name: booking.user.name || "",
+              email: booking.user.email || "",
+              phone: "",
+            }
+          : undefined,
+      });
+      if (data.payment_url) {
+        window.location.href = data.payment_url;
+      } else {
+        throw new Error("No payment URL received");
+      }
+    } catch (err) {
+      setKhaltiError(err.message || "Failed to initiate Khalti payment");
+      setKhaltiLoading(false);
     }
   };
 
@@ -237,6 +275,11 @@ const PaymentPage = () => {
                       <Typography variant="subtitle2" gutterBottom>
                         Select Payment Method
                       </Typography>
+                      {khaltiError && (
+                        <Alert severity="error" sx={{ mb: 1, py: 0.5 }}>
+                          {khaltiError}
+                        </Alert>
+                      )}
                       <PaymentOption
                         onClick={() => handlePayment("Pay on Arrival")}
                         selected={selectedPaymentMethod === "Pay on Arrival"}
@@ -267,6 +310,50 @@ const PaymentPage = () => {
                           }}
                         >
                           Select & Continue
+                        </Button>
+                      </PaymentOption>
+
+                      <PaymentOption
+                        onClick={() => handlePayment("Khalti")}
+                        selected={selectedPaymentMethod === "Khalti"}
+                        sx={{ mt: 1 }}
+                      >
+                        <AccountBalanceWalletIcon
+                          sx={{ fontSize: 24, color: "#773292", mb: 0.5 }}
+                        />
+                        <Typography variant="subtitle2" sx={{ mb: 0.5 }}>
+                          Khalti
+                        </Typography>
+                        <Typography
+                          variant="caption"
+                          color="text.secondary"
+                          sx={{ mb: 0.5 }}
+                        >
+                          Pay instantly with Khalti wallet
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          fullWidth
+                          size="small"
+                          disabled={khaltiLoading}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handlePayWithKhalti();
+                          }}
+                          sx={{
+                            bgcolor: "#773292",
+                            py: 0.25,
+                            px: 1,
+                            fontSize: "0.7rem",
+                            minHeight: "24px",
+                            "&:hover": { bgcolor: "#5a2370" },
+                          }}
+                        >
+                          {khaltiLoading ? (
+                            <CircularProgress size={16} color="inherit" />
+                          ) : (
+                            "Pay with Khalti"
+                          )}
                         </Button>
                       </PaymentOption>
                     </Box>

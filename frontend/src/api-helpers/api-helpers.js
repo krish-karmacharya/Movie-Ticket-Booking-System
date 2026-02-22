@@ -208,6 +208,32 @@ export const deleteMovie = async (id) => {
   return resData;
 };
 
+export const initiateKhaltiPayment = async (data) => {
+  try {
+    const res = await axios.post("/payment/khalti/initiate", data);
+    if (res.status !== 200) {
+      throw new Error(res.data?.message || "Failed to initiate Khalti payment");
+    }
+    return res.data;
+  } catch (err) {
+    console.error("Khalti initiate error:", err);
+    throw new Error(
+      err.response?.data?.message ||
+        "Failed to initiate Khalti payment. Please try again."
+    );
+  }
+};
+
+export const lookupKhaltiPayment = async (pidx) => {
+  try {
+    const res = await axios.post("/payment/khalti/lookup", { pidx });
+    return res.data;
+  } catch (err) {
+    console.error("Khalti lookup error:", err);
+    throw err;
+  }
+};
+
 export const getAllBookings = async () => {
   try {
     const token = localStorage.getItem("token");
