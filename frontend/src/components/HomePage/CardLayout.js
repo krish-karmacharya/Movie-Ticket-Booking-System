@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import { styled } from "@mui/material/styles";
 
 const StyledCard = styled(Card)(() => ({
@@ -28,13 +27,8 @@ const StyledCard = styled(Card)(() => ({
 
 const CardLayout = ({ title, description, releaseDate, posterUrl, id }) => {
   const navigate = useNavigate();
-  const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleBooking = () => {
-    if (!isUserLoggedIn) {
-      navigate("/auth");
-      return;
-    }
     navigate(`/booking/${id}`);
   };
 

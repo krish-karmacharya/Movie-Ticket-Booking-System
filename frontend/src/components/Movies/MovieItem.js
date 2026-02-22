@@ -10,7 +10,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import CalendarTodayIcon from "@mui/icons-material/CalendarToday";
-import { useSelector } from "react-redux";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
 
 const StyledCard = styled(Card)(({ theme }) => ({
@@ -33,13 +32,8 @@ const StyledCard = styled(Card)(({ theme }) => ({
 
 const MovieItem = ({ id, title, posterUrl, releaseDate, description }) => {
   const navigate = useNavigate();
-  const isUserLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const handleBooking = () => {
-    if (!isUserLoggedIn) {
-      navigate("/auth");
-      return;
-    }
     navigate(`/booking/${id}`);
   };
 

@@ -95,7 +95,9 @@ const Header = () => {
   const handleChange = (e, val) => {
     setValue(val);
     if (val) {
-      const movie = movies.find((m) => m.title === val);
+      const movie = movies.find(
+        (m) => m.title?.toLowerCase() === String(val).toLowerCase()
+      );
       if (movie && movie._id) {
         if (isUserLoggedIn) {
           navigate(`/booking/${movie._id}`);
@@ -104,6 +106,22 @@ const Header = () => {
         }
       }
     }
+  };
+
+  const searchFilterOptions = (options, { inputValue }) => {
+    const query = inputValue.trim().toLowerCase();
+    if (!query) return options;
+
+    return options
+      .filter((title) => title && title.toLowerCase().includes(query))
+      .sort((a, b) => {
+        const aLower = a.toLowerCase();
+        const bLower = b.toLowerCase();
+        const aExact = aLower === query ? 3 : aLower.startsWith(query) ? 2 : 1;
+        const bExact = bLower === query ? 3 : bLower.startsWith(query) ? 2 : 1;
+        if (aExact !== bExact) return bExact - aExact;
+        return aLower.indexOf(query) - bLower.indexOf(query);
+      });
   };
 
   const handleDrawerToggle = () => {
@@ -255,7 +273,8 @@ const Header = () => {
           <Autocomplete
             value={value}
             onChange={handleChange}
-            options={movies.map((movie) => movie.title)}
+            options={movies.map((movie) => movie.title).filter(Boolean)}
+            filterOptions={searchFilterOptions}
             popupIcon={null}
             renderInput={(params) => (
               <TextField

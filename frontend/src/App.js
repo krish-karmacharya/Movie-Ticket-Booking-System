@@ -52,6 +52,7 @@ const AppContent = () => {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/movies" element={<Movies />} />
+          <Route path="/booking/:id" element={<Booking />} />
           {!isUserLoggedIn && !isAdminLoggedIn && (
             <>
               <Route path="/admin" element={<Admin />} />
@@ -63,7 +64,6 @@ const AppContent = () => {
             <>
               <Route path="/user" element={<UserProfile />} />
               <Route path="/profile" element={<UserProfile />} />
-              <Route path="/booking/:id" element={<Booking />} />
               <Route path="/payment" element={<PaymentPage />} />
             </>
           )}
