@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import dns from "node:dns/promises";
+//import dns from "node:dns/promises";
 import userRouter from "./routes/user-routes.js";
 import adminRouter from "./routes/admin-routes.js";
 import movieRouter from "./routes/movie-routes.js";
@@ -10,7 +10,7 @@ import paymentRouter from "./routes/payment-routes.js";
 import cors from "cors";
 
 // Fix for Node.js v24 on Windows: force DNS servers so MongoDB SRV lookup works
-dns.setServers(["1.1.1.1", "8.8.8.8"]);
+//dns.setServers(["1.1.1.1", "8.8.8.8"]);
 
 dotenv.config();
 const app = express();
